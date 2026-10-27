@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forward Checker</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 0 auto; padding: 16px; line-height: 1.5; }
+  h1 { font-size: 1.8rem; margin-bottom: 0; }
+  .sub { margin-top: 4px; opacity: 0.8; }
+  section { border: 1px solid #888; border-radius: 12px; padding: 16px; margin: 16px 0; }
+  h2 { margin-top: 0; font-size: 1.2rem; }
+  textarea { width: 100%; min-height: 110px; font-size: 1rem; padding: 10px; box-sizing: border-box; border-radius: 8px; border: 1px solid #888; }
+  button { font-size: 1.05rem; padding: 12px 20px; border-radius: 10px; border: 1px solid #888; cursor: pointer; margin: 8px 8px 8px 0; }
+  .verdict { font-size: 1.4rem; font-weight: bold; padding: 12px; border-radius: 10px; margin: 12px 0; }
+  .danger { background: #f8d7da; color: #721c24; }
+  .unknown { background: #fff3cd; color: #856404; }
+  .safe { background: #d4edda; color: #155724; }
+  .note { font-size: 0.9rem; opacity: 0.8; }
+  .row { margin: 6px 0; }
+  label { display: block; margin: 8px 0; }
+  @media (prefers-color-scheme: dark) {
+    .danger { background: #5a1a1a; color: #ffb3b3; }
+    .unknown { background: #5a4a00; color: #ffe08a; }
+    .safe { background: #143d1f; color: #a3e6b5; }
+  }
+</style>
+</head>
+<body>
+<h1>🔍 Forward Checker</h1>
+<p class="sub">Check a forward before you trust it. Nothing leaves your phone.</p>
+
+<section>
+  <h2>1. Check a forward</h2>
+  <p>Paste the forwarded message, caption, or claim here:</p>
+  <textarea id="fwd" placeholder="Paste the forwarded message here..."></textarea>
+  <br>
+  <button id="checkBtn">Check</button>
+  <div id="result"></div>
+  <p class="note">This is a pattern check on your phone, not proof. It errs on the side of caution. Nothing you paste is sent anywhere.</p>
+</section>
+
+<section>
+  <h2>2. Local Mode</h2>
+  <p>Run your phone on a local network with no internet, so remote hackers have no path in.</p>
+  <div class="row">Browser network: <span id="netStatus">Not checked yet</span></div>
+  <div class="row">Internet reachable: <span id="inetStatus">Not tested yet</span></div>
+  <div class="row">GPS: <span id="gpsStatus">Not checked yet</span></div>
+  <div id="badge" class="verdict unknown">NOT TESTED YET</div>
+  <button id="testBtn">Test internet</button>
+  <button id="gpsBtn">Show my position</button>
+  <p class="note">The test contacts one tiny address only to see if the net answers. This page cannot tell if you are on Wi-Fi or mobile data — check that yourself. GPS only receives signals, so it works offline.</p>
+
+  <h2>Go Local — 4 steps</h2>
+  <label><input type="checkbox"> 1. Airplane mode ON (cuts mobile data and calls)</label>
+  <label><input type="checkbox"> 2. Wi-Fi back ON while still in Airplane mode</label>
+  <label><input type="checkbox"> 3. Join a local network with no internet (a router with the internet cable unplugged, or a spare phone hotspot with its mobile data off)</label>
+  <label><input type="checkbox"> 4. Keep GPS ON</label>
+
+  <h2>Offline maps tip</h2>
+  <p>Download maps before you go offline: Google Maps or OsmAnd, both free.</p>
+
+  <h2>Local notes</h2>
+  <textarea id="notes" placeholder="Notes that stay on this phone..."></textarea>
+  <br>
+  <button id="saveNotesBtn">Save on this phone</button>
+  <span id="notesMsg"></span>
+
+  <h2>Honest limits</h2>
+  <ul>
+    <li>This protects against remote hackers only.</li>
+    <li>It does NOT protect against people on the same Wi-Fi.</li>
+    <li>Apps can still send saved data when internet returns — do not turn internet back on while sensitive apps are open.</li>
+    <li>A nearby radio attacker is a different problem from an internet hack.</li>
+  </ul>
+</section>
+
+<script>
+function el(id) { return document.getElementById(id); }
+
+function showVerdict(box, kind, title, reason, action) {
+  box.className = 'verdict ' + kind;
+  box.innerHTML = '<div>' + title + '</div>' +
+    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;">' + reason + '</div>' +
+    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;"><b>What to do:</b> ' + action + '</div>';
+}
+
+function checkForward() {
+  var box = el('result');
+  var text = el('fwd').value || '';
+  var t = text.toLowerCase();
+  if (!text.trim()) {
+    showVerdict(box, 'unknown', 'PASTE FIRST', 'Nothing pasted yet.', 'Paste the forwarded message above, then tap Check.');
+    return;
+  }
+  var hasCode = /code|otp|password|passcode/.test(t);
+  var asksSend = /send|share|give|tell me/.test(t);
+  var hasLink = /https?:\/\/|www\./.test(t);
+  var urgent = /urgent|act now|immediately|account (locked|suspended|closed)|verify (now|immediately)|limited time|last chance/.test(t);
+  var money = /send money|pay now|you (won|win)|prize|lottery|investment|double your money|bank account/.test(t);
+  if (hasCode && asksSend) {
+    showVerdict(box, 'danger', 'DANGEROUS', 'It asks for a code or password.', 'Never send a code to anyone, ever. Delete it.');
+  } else if (hasLink && urgent) {
+    showVerdict(box, 'danger', 'DANGEROUS', 'A link plus urgency is the classic trap.', 'Do not tap the link. Check with the sender on a different channel first.');
+  } else if (money) {
+    showVerdict(box, 'danger', 'DANGEROUS', 'It promises money or a prize, or asks for payment.', 'Do not pay, do not tap. Ask the sender directly.');
+  } else if (hasLink || /tap|click|download|forward this|share this/.test(t)) {
+    showVerdict(box, 'unknown', 'UNKNOWN', 'It has a link or asks you to act, and I cannot verify it offline.', 'Do not tap yet. Check with the sender on a different channel first.');
+  } else {
+    showVerdict(box, 'safe', 'SAFE', 'No link, no request, no claim found. No trap patterns here.', 'Still: if it later asks you to do something, check first.');
+  }
+}
+
+function setBadge(kind, text) {
+  var b = el('badge');
+  b.className = 'verdict ' + kind;
+  b.textContent = text;
+}
+
+function testInternet() {
+  try {
+    el('netStatus').textContent = navigator.onLine ? 'Browser says: online' : 'Browser says: offline (but this alone is not trusted)';
+  } catch (e) {
+    el('netStatus').textContent = 'Browser network status unavailable.';
+  }
+  el('inetStatus').textContent = 'Testing...';
+  var done = false;
+  function finish(ok) {
+    if (done) return;
+    done = true;
+    if (ok) {
+      el('inetStatus').textContent = 'Reachable — internet can reach in.';
+      setBadge('danger', 'EXPOSED');
+    } else {
+      el('inetStatus').textContent = 'Not reachable — no internet path in.';
+      setBadge('safe', 'SAFE');
+    }
+  }
+  try {
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { try { ctrl.abort(); } catch (e) {} finish(false); }, 3000);
+    fetch('https://example.com/', { mode: 'no-cors', signal: ctrl.signal })
+      .then(function () { clearTimeout(timer); finish(true); })
+      .catch(function () { clearTimeout(timer); finish(false); });
+  } catch (e) {
+    finish(false);
+  }
+}
+
+function showGPS() {
+  try {
+    if (!navigator.geolocation) {
+      el('gpsStatus').textContent = 'GPS is not available here. Open this page over https for GPS.';
+      return;
+    }
+    el('gpsStatus').textContent = 'Waiting for GPS...';
+    navigator.geolocation.getCurrentPosition(
+      function (pos) {
+        el('gpsStatus').textContent = 'Latitude ' + pos.coords.latitude.toFixed(5) +
+          ', longitude ' + pos.coords.longitude.toFixed(5) +
+          ' (accuracy about ' + Math.round(pos.coords.accuracy) + ' meters).';
+      },
+      function () {
+        el('gpsStatus').textContent = 'GPS needs permission. It only receives signals, so it works offline.';
+      },
+      { timeout: 10000 }
+    );
+  } catch (e) {
+    el('gpsStatus').textContent = 'GPS check failed. It only receives signals, so it works offline.';
+  }
+}
+
+function loadNotes() {
+  try {
+    var saved = localStorage.getItem('fc-notes');
+    if (saved) el('notes').value = saved;
+  } catch (e) {}
+}
+
+function saveNotes() {
+  try {
+    localStorage.setItem('fc-notes', el('notes').value || '');
+    el('notesMsg').textContent = 'Saved on this phone.';
+  } catch (e) {
+    el('notesMsg').textContent = 'Could not save on this phone (storage blocked).';
+  }
+}
+
+el('checkBtn').addEventListener('click', checkForward);
+el('testBtn').addEventListener('click', testInternet);
+el('gpsBtn').addEventListener('click', showGPS);
+el('saveNotesBtn').addEventListener('click', saveNotes);
+loadNotes();
+</script>
+</body>
+</html>
