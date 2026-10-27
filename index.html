@@ -6,30 +6,31 @@
 <title>Forward Checker</title>
 <style>
   :root { color-scheme: light dark; }
-  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 0 auto; padding: 16px; line-height: 1.5; }
-  h1 { font-size: 1.8rem; margin-bottom: 0; }
-  .sub { margin-top: 4px; opacity: 0.8; }
-  section { border: 1px solid #888; border-radius: 12px; padding: 16px; margin: 16px 0; }
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 0 auto; padding: 16px; line-height: 1.5; background: linear-gradient(135deg, #7c3aed, #c026d3, #9333ea); background-attachment: fixed; color: #fff; }
+  h1 { font-size: 1.8rem; margin-bottom: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.25); }
+  .sub { margin-top: 4px; opacity: 0.9; }
+  section { background: rgba(255,255,255,0.16); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.35); border-radius: 20px; padding: 16px; margin: 16px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
   h2 { margin-top: 0; font-size: 1.2rem; }
-  textarea { width: 100%; min-height: 110px; font-size: 1rem; padding: 10px; box-sizing: border-box; border-radius: 8px; border: 1px solid #888; }
-  button { font-size: 1.05rem; padding: 12px 20px; border-radius: 10px; border: 1px solid #888; cursor: pointer; margin: 8px 8px 8px 0; }
-  .verdict { font-size: 1.4rem; font-weight: bold; padding: 12px; border-radius: 10px; margin: 12px 0; }
-  .danger { background: #f8d7da; color: #721c24; }
-  .unknown { background: #fff3cd; color: #856404; }
-  .safe { background: #d4edda; color: #155724; }
-  .note { font-size: 0.9rem; opacity: 0.8; }
+  textarea { width: 100%; min-height: 110px; font-size: 1rem; padding: 10px; box-sizing: border-box; border-radius: 12px; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.2); color: inherit; }
+  textarea::placeholder { color: rgba(255,255,255,0.7); }
+  button { font-size: 1.05rem; padding: 12px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.5); background: rgba(147,51,234,0.55); color: #fff; cursor: pointer; margin: 8px 8px 8px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+  .verdict { font-size: 1.4rem; font-weight: bold; padding: 12px; border-radius: 14px; margin: 12px 0; }
+  .danger { background: rgba(248,215,218,0.9); color: #721c24; }
+  .unknown { background: rgba(255,243,205,0.9); color: #856404; }
+  .safe { background: rgba(212,237,218,0.9); color: #155724; }
+  .note { font-size: 0.9rem; opacity: 0.85; }
   .row { margin: 6px 0; }
   label { display: block; margin: 8px 0; }
   @media (prefers-color-scheme: dark) {
-    .danger { background: #5a1a1a; color: #ffb3b3; }
-    .unknown { background: #5a4a00; color: #ffe08a; }
-    .safe { background: #143d1f; color: #a3e6b5; }
+    .danger { background: rgba(90,26,26,0.85); color: #ffb3b3; }
+    .unknown { background: rgba(90,74,0,0.85); color: #ffe08a; }
+    .safe { background: rgba(20,61,31,0.85); color: #a3e6b5; }
   }
 </style>
 </head>
 <body>
 <h1>🔍 Forward Checker</h1>
-<p class="sub">Check a forward before you trust it. Nothing leaves your phone.</p>
+<p class="sub">Check a forward before you trust it. Nothing leaves your phone. 💜</p>
 
 <section>
   <h2>1. Check a forward</h2>
