@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Satar</title>
+<meta name="theme-color" content="#2a1a4a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Satar">
 <style>
 body{margin:0;background:linear-gradient(160deg,#07080c,#2a1a4a 55%,#1a1040);color:#efe8d8;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .wrap{max-width:720px;margin:0 auto;padding:28px 20px 40px}
@@ -89,6 +94,7 @@ for(var j=0;j<bs.length;j++){bs[j].className=(bs[j].getAttribute("data-lang")===
 var lbs=document.querySelectorAll(".langs button");
 for(var k=0;k<lbs.length;k++){lbs[k].addEventListener("click",function(){setLang(this.getAttribute("data-lang"));});}
 setLang('ar');
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js',{scope:'./'}).catch(function(){});});}
 </script>
 </body>
 </html>

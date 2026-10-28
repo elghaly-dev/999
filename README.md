@@ -2,16 +2,15 @@
 
 Check a forward before you trust it. By Wyndham Heaven (elghaly).
 
+This file describes v1. The current app is Satar, in `v3/` — see
+`v3/README.md`. The root `index.html` is now the Satar landing page.
+
 ## What it is
 
 Someone forwards a message, photo, or claim. Their own phone checks it —
 instantly, no internet, no waiting, nothing sent anywhere. They get a plain
 answer in English: safe, dangerous, or unknown — with one short reason and
 what to do. Nothing more.
-
-When brothers are near each other, their phones also share warnings over
-a local network — Bluetooth and Wi-Fi Direct, no internet. Sharing is
-extra — the check never waits for it.
 
 ## v1 — in this repo
 
@@ -38,7 +37,9 @@ extra — the check never waits for it.
 ## Next steps
 
 - Host it (Pages) so it is installable and works offline after first load.
-- Warnings shared over the local mesh when brothers are near.
+  Satar v3 now has the service worker and manifest for this.
+- Share a warning as text or a QR code, by hand, phone to phone. Planned,
+  not built.
 - He tells Muse where it goes, after it is finished.
 
 ## Rules

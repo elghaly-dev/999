@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Satar</title>
+<meta name="theme-color" content="#7c3aed">
+<link rel="manifest" href="plain.webmanifest">
+<link rel="icon" type="image/png" href="../icons/icon-192.png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Satar">
 <style>
   :root { color-scheme: light dark; }
   body { font-family: system-ui, sans-serif; max-width: 660px; margin: 0 auto; padding: 16px; line-height: 1.5; background: linear-gradient(135deg, #7c3aed, #c026d3, #9333ea); background-attachment: fixed; color: #fff; }
@@ -46,6 +51,10 @@
     .unknown { background: rgba(90,74,0,0.85); color: #ffe08a; }
     .safe { background: rgba(20,61,31,0.85); color: #a3e6b5; }
   }
+  .chip { display: inline-block; font-size: 0.95rem; font-weight: normal; padding: 2px 10px; margin: 4px 4px 0 0; border-radius: 999px; border: 1px solid currentColor; }
+  .songrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.25); }
+  .songrow span { overflow-wrap: anywhere; }
+  audio { width: 100%; margin: 8px 0; }
 </style>
 </head>
 <body>
@@ -154,6 +163,17 @@
   <div class="row" id="recImportMsg"></div>
 </section>
 
+<section>
+  <h2 data-t="musTitle"></h2>
+  <p data-t="musText"></p>
+  <label><span data-t="musAdd"></span> <input type="file" id="musFile" accept="audio/*" multiple></label>
+  <div class="row" id="musMsg"></div>
+  <audio id="musPlayer" controls preload="none" style="display:none"></audio>
+  <div id="musList"></div>
+  <p class="note" id="musEmpty" data-t="musEmpty"></p>
+  <p class="note" data-t="musNote"></p>
+</section>
+
 <footer>
   <div>Made by Wyndham Heaven and Muse 3️⃣💡5️⃣</div>
   <div data-t="footFree"></div>
@@ -194,20 +214,21 @@ checkTitle: '1. Check a forward', checkHint: 'Paste the forwarded message, capti
 checkPh: 'Paste the forwarded message here...', checkBtn: 'Check', hearBtn: 'Hear verdict',
 checkNote: 'This is a pattern check on your phone, not proof. It errs on the side of caution. Nothing you paste is sent anywhere.',
 pasteFirst: 'PASTE FIRST', pasteFirstR: 'Nothing pasted yet.', pasteFirstA: 'Paste the forwarded message above, then tap Check.',
-vDanger: 'DANGEROUS', vUnknown: 'UNKNOWN', vSafe: 'SAFE',
+vDanger: 'DANGEROUS', vUnknown: 'UNKNOWN', vSafe: 'NO WARNING SIGNS FOUND',
 rCode: 'It asks for a code or password.', aCode: 'Never send a code to anyone, ever. Delete it.',
 rLinkUrg: 'A link plus urgency is the classic trap.', aLinkUrg: 'Do not tap the link. Check with the sender on a different channel first.',
 rMoney: 'It promises money or a prize, or asks for payment.', aMoney: 'Do not pay, do not tap. Ask the sender directly.',
 rLink: 'It has a link or asks you to act, and I cannot verify it offline.', aLink: 'Do not tap yet. Check with the sender on a different channel first.',
-rSafe: 'No link, no request, no claim found. No trap patterns here.', aSafe: 'Still: if it later asks you to do something, check first.',
+rSafe: 'No link, no code request, no money or prize found. This does not prove it is true — it only means the usual trap signs are missing.', aSafe: 'Still: if it later asks you to do something, check first.',
 localTitle: '2. Local Mode', localIntro: 'Run your phone on a local network with no internet, so remote hackers have no path in.',
-netLabel: 'Browser network:', inetLabel: 'Internet reachable:', gpsLabel: 'GPS:',
-badgeNew: 'NOT TESTED YET', testBtn: 'Test internet', gpsBtn: 'Show my position',
-netOnline: 'Browser says: online', netOffline: 'Browser says: offline (but this alone is not trusted)', netUnavail: 'Browser network status unavailable.',
-inetTesting: 'Testing...', inetOk: 'Reachable — internet can reach in.', inetBad: 'Not reachable — no internet path in.',
+netLabel: 'Browser network:', inetLabel: 'Internet:', gpsLabel: 'GPS:',
+badgeNew: 'NOT TESTED YET', testBtn: 'Check network', gpsBtn: 'Show my position',
+netOnline: 'Browser says: online', netOffline: 'Browser says: offline', netUnavail: 'Browser network status unavailable.',
+inetOff: 'No network — no internet path in.', inetOn: 'Your phone has a network. This page does not contact the internet, so it cannot tell if that network reaches it. To check: open any website in your browser — if it loads, internet is on.',
+badgeOff: 'NO NETWORK', badgeOn: 'NETWORK ON — CHECK INTERNET YOURSELF',
 gpsUnavail: 'GPS is not available here. Open this page over https for GPS.', gpsWait: 'Waiting for GPS...',
 gpsNeed: 'GPS needs permission. It only receives signals, so it works offline.', gpsFail: 'GPS check failed. It only receives signals, so it works offline.',
-localNote: 'The test contacts one tiny address only to see if the net answers, and only when you tap it. This page cannot tell if you are on Wi-Fi or mobile data — check that yourself. GPS only receives signals, so it works offline.',
+localNote: 'This check never contacts the internet — it only asks your phone whether it has a network. This page cannot tell if you are on Wi-Fi or mobile data — check that yourself. GPS only receives signals, so it works offline.',
 goLocal: 'Go Local — 4 steps', step1: '1. Airplane mode ON (cuts mobile data and calls)', step2: '2. Wi-Fi back ON while still in Airplane mode', step3: '3. Join a local network with no internet (a router with the internet cable unplugged, or a spare phone hotspot with its mobile data off)', step4: '4. Keep GPS ON',
 mapsTitle: 'Offline maps tip', mapsText: 'Download maps before you go offline: Google Maps or OsmAnd, both free.',
 notesTitle: 'Local notes', notesPh: 'Notes that stay on this phone...', notesSave: 'Save on this phone', notesSaved: 'Saved on this phone.', notesFail: 'Could not save on this phone (storage blocked).',
@@ -226,7 +247,11 @@ recTitle: '6. Recovery', recText: 'Keep a copy of your notes and notebook, so a 
 recExport: 'Export backup', recExported: 'Backup downloaded. Send this file yourself with your own mail or SMS app.',
 recMail: 'Open mail app', recSms: 'Open SMS app', recAttach: 'Mail and SMS apps cannot take a file from a link — attach the downloaded file by hand before you send.',
 recImport: 'Import a backup file:', recImported: 'Backup loaded. Your notes and notebook are back.', recBad: 'That file is not a Satar backup. Nothing changed.',
-footFree: 'Free web app, made with 💜, not for money.', footNothing: 'Nothing stored, nothing tracked, nothing sent anywhere.', footLicense: 'License: MIT.', footWarn: 'This work is ours, made with love. Use it with love, keep our name on it, and please don\'t steal it.', whatToDo: 'What to do:',
+footFree: 'Free web app, made with 💜, not for money.', footNothing: 'Nothing stored, nothing tracked, nothing sent anywhere.', footLicense: 'License: MIT.', footWarn: 'This work is ours, made with love. Use it with love, keep our name on it, and please don\'t steal it.', whatToDo: 'What to do:', whyWords: 'Words that raised this:',
+musTitle: '7. My music', musText: 'Add songs that are already on your phone. They are kept inside this app on this phone and play with no internet. Nothing is downloaded from anywhere, nothing is sent anywhere.',
+musAdd: 'Add songs from this phone:', musEmpty: 'No songs yet.', musPlay: 'Play', musDel: 'Delete', musAdded: 'Songs added: {n}.',
+musFail: 'Some files could not be added (not a song, or storage is full).', musNo: 'Music storage is not available in this browser.',
+musNote: 'Songs stay on this phone only and are not in the backup file. On iPhone, music may stop when the screen locks. Only add songs you have the right to play.',
 recMailBody: 'Satar backup — I will attach the downloaded satar-backup.json file by hand.',
 recSmsBody: 'Satar backup — I will attach the downloaded file by hand.'
 },
@@ -236,20 +261,21 @@ checkTitle: '١. تحقق من رسالة', checkHint: 'الصق الرسالة 
 checkPh: 'الصق الرسالة هنا...', checkBtn: 'تحقق', hearBtn: 'اسمع النتيجة',
 checkNote: 'هذا فحص أنماط على هاتفك، وليس دليلاً. وهو يميل إلى الحذر. لا شيء مما تلصقه يُرسل إلى أي مكان.',
 pasteFirst: 'الصق أولاً', pasteFirstR: 'لم يتم لصق شيء بعد.', pasteFirstA: 'الصق الرسالة أعلاه ثم اضغط تحقق.',
-vDanger: 'خطير', vUnknown: 'غير معروف', vSafe: 'آمن',
+vDanger: 'خطير', vUnknown: 'غير معروف', vSafe: 'لا توجد علامات تحذير',
 rCode: 'يطلب رمزاً أو كلمة مرور.', aCode: 'لا ترسل رمزاً لأي شخص أبداً. احذفها.',
 rLinkUrg: 'رابط مع استعجال — هذا هو الفخ المعتاد.', aLinkUrg: 'لا تضغط على الرابط. تحقق مع المرسل عبر قناة أخرى أولاً.',
 rMoney: 'يعد بمال أو جائزة، أو يطلب دفعاً.', aMoney: 'لا تدفع ولا تضغط. اسأل المرسل مباشرة.',
 rLink: 'فيه رابط أو يطلب منك فعلاً، ولا أستطيع التحقق منه دون إنترنت.', aLink: 'لا تضغط بعد. تحقق مع المرسل عبر قناة أخرى أولاً.',
-rSafe: 'لا رابط ولا طلب ولا ادعاء. لا أنماط فخ هنا.', aSafe: 'مع ذلك: إذا طلب منك لاحقاً فعل شيء، تحقق أولاً.',
+rSafe: 'لم يُعثر على رابط ولا طلب رمز ولا مال أو جائزة. هذا لا يثبت أنها صحيحة — يعني فقط أن علامات الفخ المعتادة غير موجودة.', aSafe: 'مع ذلك: إذا طلب منك لاحقاً فعل شيء، تحقق أولاً.',
 localTitle: '٢. الوضع المحلي', localIntro: 'شغّل هاتفك على شبكة محلية بلا إنترنت، حتى لا يجد المخترقون البعيدون طريقاً إليه.',
-netLabel: 'شبكة المتصفح:', inetLabel: 'الإنترنت متاح:', gpsLabel: 'نظام تحديد المواقع:',
-badgeNew: 'لم يتم الاختبار بعد', testBtn: 'اختبر الإنترنت', gpsBtn: 'أظهر موقعي',
-netOnline: 'المتصفح يقول: متصل', netOffline: 'المتصفح يقول: غير متصل (لكن هذا وحده غير موثوق)', netUnavail: 'حالة شبكة المتصفح غير متاحة.',
-inetTesting: 'جارٍ الاختبار...', inetOk: 'يمكن الوصول — الإنترنت يستطيع الدخول.', inetBad: 'لا يمكن الوصول — لا طريق إنترنت إلى الداخل.',
+netLabel: 'شبكة المتصفح:', inetLabel: 'الإنترنت:', gpsLabel: 'نظام تحديد المواقع:',
+badgeNew: 'لم يتم الاختبار بعد', testBtn: 'افحص الشبكة', gpsBtn: 'أظهر موقعي',
+netOnline: 'المتصفح يقول: متصل', netOffline: 'المتصفح يقول: غير متصل', netUnavail: 'حالة شبكة المتصفح غير متاحة.',
+inetOff: 'لا شبكة — لا طريق إنترنت إلى الداخل.', inetOn: 'هاتفك متصل بشبكة. هذه الصفحة لا تتصل بالإنترنت، لذلك لا تعرف هل هذه الشبكة تصل إليه. للتحقق: افتح أي موقع في متصفحك — إذا فُتح، فالإنترنت يعمل.',
+badgeOff: 'لا شبكة', badgeOn: 'الشبكة متصلة — تحقق من الإنترنت بنفسك',
 gpsUnavail: 'نظام تحديد المواقع غير متاح هنا. افتح الصفحة عبر https لنظام تحديد المواقع.', gpsWait: 'بانتظار نظام تحديد المواقع...',
 gpsNeed: 'نظام تحديد المواقع يحتاج إذناً. وهو يستقبل الإشارات فقط، فيعمل دون إنترنت.', gpsFail: 'فشل فحص نظام تحديد المواقع. وهو يستقبل الإشارات فقط، فيعمل دون إنترنت.',
-localNote: 'الاختبار يتصل بعنوان صغير واحد فقط ليرى هل تجيب الشبكة، وفقط عندما تضغط عليه. هذه الصفحة لا تعرف هل أنت على Wi-Fi أم بيانات الهاتف — تحقق بنفسك. نظام تحديد المواقع يستقبل الإشارات فقط، فيعمل دون إنترنت.',
+localNote: 'هذا الفحص لا يتصل بالإنترنت أبداً — يسأل هاتفك فقط هل لديه شبكة. هذه الصفحة لا تعرف هل أنت على Wi-Fi أم بيانات الهاتف — تحقق بنفسك. نظام تحديد المواقع يستقبل الإشارات فقط، فيعمل دون إنترنت.',
 goLocal: 'اذهب محلياً — ٤ خطوات', step1: '١. وضع الطيران مفعّل (يقطع البيانات والمكالمات)', step2: '٢. أعد تشغيل Wi-Fi وأنت ما زلت في وضع الطيران', step3: '٣. انضم إلى شبكة محلية بلا إنترنت (موجه بلا كابل إنترنت، أو نقطة اتصال من هاتف آخر بلا بيانات)', step4: '٤. أبقِ نظام تحديد المواقع مفعّلاً',
 mapsTitle: 'نصيحة الخرائط دون إنترنت', mapsText: 'حمّل الخرائط قبل أن تنقطع عن الإنترنت: خرائط Google أو OsmAnd، وكلاهما مجاني.',
 notesTitle: 'ملاحظات محلية', notesPh: 'ملاحظات تبقى على هذا الهاتف...', notesSave: 'احفظ على هذا الهاتف', notesSaved: 'تم الحفظ على هذا الهاتف.', notesFail: 'تعذر الحفظ على هذا الهاتف (التخزين محظور).',
@@ -268,7 +294,11 @@ recTitle: '٦. الاستعادة', recText: 'احتفظ بنسخة من ملا�
 recExport: 'صدّر نسخة', recExported: 'تم تنزيل النسخة. أرسل هذا الملف بنفسك بتطبيق بريدك أو رسائلك.',
 recMail: 'افتح تطبيق البريد', recSms: 'افتح تطبيق الرسائل', recAttach: 'تطبيقات البريد والرسائل لا تأخذ ملفاً من رابط — أرفق الملف المنزّل بيدك قبل الإرسال.',
 recImport: 'استورد ملف نسخة:', recImported: 'تم تحميل النسخة. ملاحظاتك ودفترك عادا.', recBad: 'هذا الملف ليس نسخة ستار. لم يتغير شيء.',
-footFree: 'تطبيق ويب مجاني، صُنع بـ 💜، وليس للمال.', footNothing: 'لا شيء مخزّن، لا شيء متتبّع، لا شيء مرسَل إلى أي مكان.', footLicense: 'الترخيص: MIT.', footWarn: 'هذا العمل لنا، صُنع بحب. استخدمه بحب، وأبقِ اسمنا عليه، ولا تسرقه.', whatToDo: 'ما يجب فعله:',
+footFree: 'تطبيق ويب مجاني، صُنع بـ 💜، وليس للمال.', footNothing: 'لا شيء مخزّن، لا شيء متتبّع، لا شيء مرسَل إلى أي مكان.', footLicense: 'الترخيص: MIT.', footWarn: 'هذا العمل لنا، صُنع بحب. استخدمه بحب، وأبقِ اسمنا عليه، ولا تسرقه.', whatToDo: 'ما يجب فعله:', whyWords: 'الكلمات التي أثارت هذا التنبيه:',
+musTitle: '٧. موسيقاي', musText: 'أضف أغاني موجودة بالفعل على هاتفك. تُحفظ داخل هذا التطبيق على هذا الهاتف وتعمل بلا إنترنت. لا شيء يُنزَّل من أي مكان، ولا شيء يُرسل إلى أي مكان.',
+musAdd: 'أضف أغاني من هذا الهاتف:', musEmpty: 'لا أغاني بعد.', musPlay: 'شغّل', musDel: 'احذف', musAdded: 'أغانٍ أضيفت: {n}.',
+musFail: 'تعذرت إضافة بعض الملفات (ليست أغنية، أو التخزين ممتلئ).', musNo: 'تخزين الموسيقى غير متاح في هذا المتصفح.',
+musNote: 'الأغاني تبقى على هذا الهاتف فقط وليست في ملف النسخة الاحتياطية. على آيفون قد تتوقف الموسيقى عند قفل الشاشة. أضف فقط أغاني يحق لك تشغيلها.',
 recMailBody: 'نسخة ستار الاحتياطية — سأرفق ملف satar-backup.json المنزّل بنفسي.',
 recSmsBody: 'نسخة ستار الاحتياطية — سأرفق الملف المنزّل بنفسي.'
 },
@@ -278,20 +308,21 @@ checkTitle: '1. 核查转发', checkHint: '把转发的消息、说明或说法�
 checkPh: '把转发的消息粘贴在这里...', checkBtn: '核查', hearBtn: '听结果',
 checkNote: '这是手机上的模式检查，不是证明。它偏向谨慎。你粘贴的任何内容都不会被发送到任何地方。',
 pasteFirst: '请先粘贴', pasteFirstR: '还没有粘贴任何内容。', pasteFirstA: '先在上面粘贴转发的消息，然后点核查。',
-vDanger: '危险', vUnknown: '未知', vSafe: '安全',
+vDanger: '危险', vUnknown: '未知', vSafe: '未发现危险迹象',
 rCode: '它索要验证码或密码。', aCode: '永远不要把验证码发给任何人。删掉它。',
 rLinkUrg: '链接加催促，就是经典陷阱。', aLinkUrg: '不要点链接。先通过另一个渠道向发件人核实。',
 rMoney: '它承诺金钱或奖品，或要求付款。', aMoney: '不要付款，不要点击。直接问发件人。',
 rLink: '它有链接或要求你行动，而我离线无法核实。', aLink: '先不要点。先通过另一个渠道向发件人核实。',
-rSafe: '没有链接、没有请求、没有说法。这里没有陷阱模式。', aSafe: '不过：如果它之后要求你做什么，先核查。',
+rSafe: '没有发现链接、索要验证码、金钱或奖品。这不能证明它是真的——只说明常见的陷阱迹象没有出现。', aSafe: '不过：如果它之后要求你做什么，先核查。',
 localTitle: '2. 本地模式', localIntro: '让你的手机运行在没有互联网的本地网络上，这样远程黑客就没有入口。',
-netLabel: '浏览器网络：', inetLabel: '互联网可达：', gpsLabel: '定位：',
-badgeNew: '尚未测试', testBtn: '测试互联网', gpsBtn: '显示我的位置',
-netOnline: '浏览器说：在线', netOffline: '浏览器说：离线（但仅凭这一点不可信）', netUnavail: '浏览器网络状态不可用。',
-inetTesting: '测试中...', inetOk: '可以到达——互联网能够进入。', inetBad: '无法到达——没有互联网入口。',
+netLabel: '浏览器网络：', inetLabel: '互联网：', gpsLabel: '定位：',
+badgeNew: '尚未测试', testBtn: '检查网络', gpsBtn: '显示我的位置',
+netOnline: '浏览器说：在线', netOffline: '浏览器说：离线', netUnavail: '浏览器网络状态不可用。',
+inetOff: '没有网络——没有互联网入口。', inetOn: '你的手机连着一个网络。本页不联系互联网，所以无法判断这个网络是否通向互联网。检查方法：在浏览器里打开任意网站——能打开，就说明互联网是通的。',
+badgeOff: '没有网络', badgeOn: '网络已连接——请自己检查互联网',
 gpsUnavail: '这里没有定位。请用 https 打开本页以使用定位。', gpsWait: '等待定位...',
 gpsNeed: '定位需要许可。它只接收信号，所以离线也能工作。', gpsFail: '定位检查失败。它只接收信号，所以离线也能工作。',
-localNote: '测试只在你点击时联系一个很小的地址，看看网络是否应答。本页无法判断你用的是 Wi-Fi 还是移动数据——请自己检查。定位只接收信号，所以离线也能工作。',
+localNote: '这个检查从不联系互联网——它只询问你的手机是否有网络。本页无法判断你用的是 Wi-Fi 还是移动数据——请自己检查。定位只接收信号，所以离线也能工作。',
 goLocal: '本地化——4 步', step1: '1. 打开飞行模式（切断移动数据和通话）', step2: '2. 保持飞行模式，重新打开 Wi-Fi', step3: '3. 加入一个没有互联网的本地网络（拔掉网线的路由器，或关闭移动数据的备用手机热点）', step4: '4. 保持定位开启',
 mapsTitle: '离线地图提示', mapsText: '离线之前先下载地图：Google 地图或 OsmAnd，都是免费的。',
 notesTitle: '本地笔记', notesPh: '只留在这部手机上的笔记...', notesSave: '保存在这部手机上', notesSaved: '已保存在这部手机上。', notesFail: '无法保存在这部手机上（存储被阻止）。',
@@ -310,7 +341,11 @@ recTitle: '6. 恢复', recText: '为你的笔记和记账本留一份副本，�
 recExport: '导出备份', recExported: '备份已下载。请用你自己的邮件或短信应用自己发送这个文件。',
 recMail: '打开邮件应用', recSms: '打开短信应用', recAttach: '邮件和短信应用不能从链接里带上文件——发送前请手动附上下载的文件。',
 recImport: '导入备份文件：', recImported: '备份已载入。你的笔记和记账本回来了。', recBad: '这个文件不是 Satar 备份。没有任何改变。',
-footFree: '免费网页应用，用 💜 制作，不为金钱。', footNothing: '不存储、不追踪、不向任何地方发送。', footLicense: '许可证：MIT。', footWarn: '这是我们的工作，用爱制作。请用爱使用，保留我们的名字，请不要偷窃。', whatToDo: '该怎么做：',
+footFree: '免费网页应用，用 💜 制作，不为金钱。', footNothing: '不存储、不追踪、不向任何地方发送。', footLicense: '许可证：MIT。', footWarn: '这是我们的工作，用爱制作。请用爱使用，保留我们的名字，请不要偷窃。', whatToDo: '该怎么做：', whyWords: '触发提醒的词：',
+musTitle: '7. 我的音乐', musText: '添加你手机里已有的歌曲。它们保存在这部手机上的这个应用里，没有互联网也能播放。不从任何地方下载，也不向任何地方发送。',
+musAdd: '从这部手机添加歌曲：', musEmpty: '还没有歌曲。', musPlay: '播放', musDel: '删除', musAdded: '已添加歌曲：{n}。',
+musFail: '有些文件无法添加（不是歌曲，或存储已满）。', musNo: '这个浏览器不支持保存音乐。',
+musNote: '歌曲只保存在这部手机上，不在备份文件里。在 iPhone 上，锁屏时音乐可能会停止。只添加你有权播放的歌曲。',
 recMailBody: 'Satar 备份——我会手动附上下载的 satar-backup.json 文件。',
 recSmsBody: 'Satar 备份——我会手动附上下载的文件。'
 },
@@ -327,7 +362,7 @@ pasteFirstR: 'Пока ничего не вставлено.',
 pasteFirstA: 'Вставьте пересланное сообщение выше, затем нажмите «Проверить».',
 vDanger: 'ОПАСНО',
 vUnknown: 'НЕИЗВЕСТНО',
-vSafe: 'БЕЗОПАСНО',
+vSafe: 'ПРИЗНАКОВ ОПАСНОСТИ НЕ НАЙДЕНО',
 rCode: 'Здесь просят код или пароль.',
 aCode: 'Никогда никому не отправляйте код. Удалите это сообщение.',
 rLinkUrg: 'Ссылка плюс срочность — классическая ловушка.',
@@ -336,27 +371,28 @@ rMoney: 'Здесь обещают деньги или приз либо про�
 aMoney: 'Не платите и не нажимайте. Спросите отправителя напрямую.',
 rLink: 'Здесь есть ссылка или просьба что-то сделать, и я не могу проверить это без интернета.',
 aLink: 'Пока не нажимайте. Сначала проверьте у отправителя другим способом.',
-rSafe: 'Нет ссылки, нет просьбы, нет утверждений. Признаков ловушки здесь нет.',
+rSafe: 'Не найдено ни ссылки, ни просьбы о коде, ни денег или приза. Это не доказывает, что это правда, — это значит лишь, что обычных признаков ловушки нет.',
 aSafe: 'Всё равно: если позже вас попросят что-то сделать, сначала проверьте.',
 localTitle: '2. Локальный режим',
 localIntro: 'Пусть ваш телефон работает в локальной сети без интернета — тогда у удалённых взломщиков не будет к нему пути.',
 netLabel: 'Сеть браузера:',
-inetLabel: 'Интернет доступен:',
+inetLabel: 'Интернет:',
 gpsLabel: 'GPS:',
 badgeNew: 'ЕЩЁ НЕ ПРОВЕРЕНО',
-testBtn: 'Проверить интернет',
+testBtn: 'Проверить сеть',
 gpsBtn: 'Показать моё положение',
 netOnline: 'Браузер сообщает: в сети',
-netOffline: 'Браузер сообщает: не в сети (но этому одному верить нельзя)',
+netOffline: 'Браузер сообщает: не в сети',
 netUnavail: 'Состояние сети браузера недоступно.',
-inetTesting: 'Проверка...',
-inetOk: 'Доступен — интернет может проникнуть внутрь.',
-inetBad: 'Недоступен — пути для интернета внутрь нет.',
+inetOff: 'Сети нет — пути для интернета внутрь нет.',
+inetOn: 'У телефона есть сеть. Эта страница не обращается к интернету, поэтому не может сказать, выходит ли эта сеть в интернет. Чтобы проверить: откройте любой сайт в браузере — если он загрузится, интернет есть.',
+badgeOff: 'СЕТИ НЕТ',
+badgeOn: 'СЕТЬ ЕСТЬ — ПРОВЕРЬТЕ ИНТЕРНЕТ САМИ',
 gpsUnavail: 'GPS здесь недоступен. Откройте страницу через https для GPS.',
 gpsWait: 'Ожидание GPS...',
 gpsNeed: 'Для GPS нужно разрешение. Он только принимает сигналы, поэтому работает без интернета.',
 gpsFail: 'Проверка GPS не удалась. Он только принимает сигналы, поэтому работает без интернета.',
-localNote: 'Проверка обращается только к одному маленькому адресу, чтобы увидеть, отвечает ли сеть, и только когда вы нажимаете. Эта страница не может сказать, вы на Wi-Fi или на мобильной связи — проверьте сами. GPS только принимает сигналы, поэтому работает без интернета.',
+localNote: 'Эта проверка никогда не обращается к интернету — она только спрашивает телефон, есть ли у него сеть. Эта страница не может сказать, вы на Wi-Fi или на мобильной связи — проверьте сами. GPS только принимает сигналы, поэтому работает без интернета.',
 goLocal: 'Перейти в локальный режим — 4 шага',
 step1: '1. Режим полёта ВКЛ (отключает мобильную связь и звонки)',
 step2: '2. Снова ВКЛ Wi-Fi, оставаясь в режиме полёта',
@@ -418,6 +454,17 @@ recBad: 'Этот файл — не копия Сатара. Ничего не �
 footFree: 'Бесплатное веб-приложение, сделано с 💜, не ради денег.',
 footNothing: 'Ничего не хранится, ничего не отслеживается, ничего никуда не отправляется.', footLicense: 'Лицензия: MIT.', footWarn: 'Эта работа наша, сделана с любовью. Пользуйтесь с любовью, сохраняйте наше имя и, пожалуйста, не крадите её.',
 whatToDo: 'Что делать:',
+whyWords: 'Слова, вызвавшие предупреждение:',
+musTitle: '7. Моя музыка',
+musText: 'Добавьте песни, которые уже есть на вашем телефоне. Они хранятся внутри этого приложения на этом телефоне и играют без интернета. Ничего ниоткуда не скачивается и никуда не отправляется.',
+musAdd: 'Добавить песни с этого телефона:',
+musEmpty: 'Пока нет песен.',
+musPlay: 'Слушать',
+musDel: 'Удалить',
+musAdded: 'Добавлено песен: {n}.',
+musFail: 'Некоторые файлы не удалось добавить (это не песня или хранилище заполнено).',
+musNo: 'Хранилище музыки недоступно в этом браузере.',
+musNote: 'Песни остаются только на этом телефоне и не входят в файл резервной копии. На iPhone музыка может остановиться, когда экран блокируется. Добавляйте только песни, которые вы вправе слушать.',
 recMailBody: 'Резервная копия Сатара — я сам прикреплю скачанный файл satar-backup.json.',
 recSmsBody: 'Резервная копия Сатара — я сам прикреплю скачанный файл.'
 }
@@ -480,6 +527,46 @@ function matchAny(group, text, latinLower) {
 
 var lastVerdictText = '';
 
+// Latin, Cyrillic and Arabic letters: a match grows to its whole word.
+// Chinese has no spaces, so a Chinese match stays as matched.
+var WORD_CH = /[A-Za-z0-9_\u00C0-\u024F\u0400-\u04FF\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06FF]/;
+
+function wholeWord(src, start, end, isUrl) {
+  while (start > 0 && WORD_CH.test(src.charAt(start - 1))) start--;
+  while (end < src.length && (isUrl ? !/\s/.test(src.charAt(end)) : WORD_CH.test(src.charAt(end)))) end++;
+  var w = src.slice(start, end);
+  return w.length > 60 ? w.slice(0, 57) + '...' : w;
+}
+
+function matchWords(group, text, latinLower, out) {
+  var pats = PATTERNS[group];
+  for (var i = 0; i < pats.length; i++) {
+    var src = text, m = pats[i].exec(text);
+    if (!m) { src = latinLower; m = pats[i].exec(latinLower); }
+    if (!m) continue;
+    var w = wholeWord(src, m.index, m.index + m[0].length, /^(https?:\/\/|www\.)/i.test(m[0]));
+    if (w && out.indexOf(w) < 0) out.push(w);
+  }
+  return out;
+}
+
+function showWords(box, words) {
+  if (!words.length) return;
+  var d = document.createElement('div');
+  d.style.cssText = 'font-size:1rem;font-weight:normal;margin-top:6px;';
+  var b = document.createElement('b');
+  b.textContent = T('whyWords') + ' ';
+  d.appendChild(b);
+  for (var i = 0; i < words.length; i++) {
+    var s = document.createElement('span');
+    s.className = 'chip';
+    s.dir = 'auto';
+    s.textContent = words[i];
+    d.appendChild(s);
+  }
+  box.appendChild(d);
+}
+
 function checkForward() {
   var box = el('result');
   var text = el('fwd').value || '';
@@ -495,19 +582,22 @@ function checkForward() {
   var urgent = matchAny('urgent', text, latinLower);
   var money = matchAny('money', text, latinLower);
   var act = matchAny('act', text, latinLower);
-  var kind, title, reason, action;
+  var kind, title, reason, action, groups = [];
   if (hasCode && asksSend) {
-    kind = 'danger'; title = T('vDanger'); reason = T('rCode'); action = T('aCode');
+    kind = 'danger'; title = T('vDanger'); reason = T('rCode'); action = T('aCode'); groups = ['code', 'send'];
   } else if (hasLink && urgent) {
-    kind = 'danger'; title = T('vDanger'); reason = T('rLinkUrg'); action = T('aLinkUrg');
+    kind = 'danger'; title = T('vDanger'); reason = T('rLinkUrg'); action = T('aLinkUrg'); groups = ['link', 'urgent'];
   } else if (money) {
-    kind = 'danger'; title = T('vDanger'); reason = T('rMoney'); action = T('aMoney');
+    kind = 'danger'; title = T('vDanger'); reason = T('rMoney'); action = T('aMoney'); groups = ['money'];
   } else if (hasLink || act) {
-    kind = 'unknown'; title = T('vUnknown'); reason = T('rLink'); action = T('aLink');
+    kind = 'unknown'; title = T('vUnknown'); reason = T('rLink'); action = T('aLink'); groups = ['link', 'act'];
   } else {
     kind = 'safe'; title = T('vSafe'); reason = T('rSafe'); action = T('aSafe');
   }
   showVerdict(box, kind, title, reason, action);
+  var words = [];
+  for (var g = 0; g < groups.length; g++) matchWords(groups[g], text, latinLower, words);
+  showWords(box, words);
   lastVerdictText = title + '. ' + reason + ' ' + action;
 }
 
@@ -529,32 +619,20 @@ function setBadge(kind, text) {
 }
 
 function testInternet() {
+  // Asks this phone only. No request leaves it.
+  var online = true;
   try {
-    el('netStatus').textContent = navigator.onLine ? T('netOnline') : T('netOffline');
+    online = navigator.onLine !== false;
+    el('netStatus').textContent = online ? T('netOnline') : T('netOffline');
   } catch (e) {
     el('netStatus').textContent = T('netUnavail');
   }
-  el('inetStatus').textContent = T('inetTesting');
-  var done = false;
-  function finish(ok) {
-    if (done) return;
-    done = true;
-    if (ok) {
-      el('inetStatus').textContent = T('inetOk');
-      setBadge('danger', T('vDanger'));
-    } else {
-      el('inetStatus').textContent = T('inetBad');
-      setBadge('safe', T('vSafe'));
-    }
-  }
-  try {
-    var ctrl = new AbortController();
-    var timer = setTimeout(function () { try { ctrl.abort(); } catch (e) {} finish(false); }, 3000);
-    fetch('https://example.com/', { mode: 'no-cors', signal: ctrl.signal })
-      .then(function () { clearTimeout(timer); finish(true); })
-      .catch(function () { clearTimeout(timer); finish(false); });
-  } catch (e) {
-    finish(false);
+  if (online) {
+    el('inetStatus').textContent = T('inetOn');
+    setBadge('unknown', T('badgeOn'));
+  } else {
+    el('inetStatus').textContent = T('inetOff');
+    setBadge('safe', T('badgeOff'));
   }
 }
 
@@ -786,6 +864,128 @@ function importBackup(file) {
   reader.readAsText(file);
 }
 
+var musDB = null;
+var musURL = null;
+
+function musOpen(cb) {
+  if (musDB) { cb(musDB); return; }
+  try {
+    if (!window.indexedDB) { cb(null); return; }
+    var req = indexedDB.open('satar-music', 1);
+    req.onupgradeneeded = function () {
+      var db = req.result;
+      if (!db.objectStoreNames.contains('meta')) db.createObjectStore('meta', { keyPath: 'id', autoIncrement: true });
+      if (!db.objectStoreNames.contains('data')) db.createObjectStore('data');
+    };
+    req.onsuccess = function () { musDB = req.result; cb(musDB); };
+    req.onerror = function () { cb(null); };
+  } catch (e) { cb(null); }
+}
+
+function musAdd(files) {
+  musOpen(function (db) {
+    if (!db) { el('musMsg').textContent = T('musNo'); return; }
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+    var added = 0, failed = 0;
+    (function next() {
+      if (!files.length) {
+        var msg = T('musAdded').replace('{n}', added);
+        if (failed) msg += ' ' + T('musFail');
+        el('musMsg').textContent = msg;
+        renderMusic();
+        return;
+      }
+      var f = files.shift();
+      if (f.type && f.type.indexOf('audio/') !== 0) { failed++; next(); return; }
+      var reader = new FileReader();
+      reader.onload = function () {
+        try {
+          var tx = db.transaction(['meta', 'data'], 'readwrite');
+          var r = tx.objectStore('meta').add({ name: f.name, type: f.type || 'audio/mpeg', size: f.size, added: new Date().toISOString().slice(0, 10) });
+          r.onsuccess = function () { tx.objectStore('data').put(reader.result, r.result); };
+          tx.oncomplete = function () { added++; next(); };
+          tx.onabort = function () { failed++; next(); };
+        } catch (e) { failed++; next(); }
+      };
+      reader.onerror = function () { failed++; next(); };
+      reader.readAsArrayBuffer(f);
+    })();
+  });
+}
+
+function musButton(key, fn) {
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'small';
+  b.setAttribute('data-t', key);
+  b.textContent = T(key);
+  b.addEventListener('click', fn);
+  return b;
+}
+
+function renderMusic() {
+  musOpen(function (db) {
+    if (!db) { el('musEmpty').style.display = 'block'; return; }
+    var items = [];
+    try {
+      var cur = db.transaction('meta', 'readonly').objectStore('meta').openCursor();
+      cur.onsuccess = function () {
+        var c = cur.result;
+        if (c) { items.push(c.value); c['continue'](); return; }
+        var box = el('musList');
+        box.textContent = '';
+        items.forEach(function (s) {
+          var row = document.createElement('div');
+          row.className = 'songrow';
+          var name = document.createElement('span');
+          name.dir = 'auto';
+          name.textContent = s.name;
+          var btns = document.createElement('span');
+          btns.appendChild(musButton('musPlay', function () { musPlay(s.id); }));
+          btns.appendChild(musButton('musDel', function () { musDelete(s.id); }));
+          row.appendChild(name);
+          row.appendChild(btns);
+          box.appendChild(row);
+        });
+        el('musEmpty').style.display = items.length ? 'none' : 'block';
+      };
+    } catch (e) {}
+  });
+}
+
+function musPlay(id) {
+  musOpen(function (db) {
+    if (!db) return;
+    try {
+      var tx = db.transaction(['meta', 'data'], 'readonly');
+      var m = tx.objectStore('meta').get(id);
+      var d = tx.objectStore('data').get(id);
+      tx.oncomplete = function () {
+        if (!m.result || !d.result) return;
+        var p = el('musPlayer');
+        if (musURL) URL.revokeObjectURL(musURL);
+        musURL = URL.createObjectURL(new Blob([d.result], { type: m.result.type }));
+        p.src = musURL;
+        p.style.display = 'block';
+        var pr = p.play();
+        if (pr && pr.catch) pr.catch(function () {});
+      };
+    } catch (e) {}
+  });
+}
+
+function musDelete(id) {
+  musOpen(function (db) {
+    if (!db) return;
+    try {
+      var tx = db.transaction(['meta', 'data'], 'readwrite');
+      tx.objectStore('meta')['delete'](id);
+      tx.objectStore('data')['delete'](id);
+      tx.oncomplete = renderMusic;
+    } catch (e) {}
+  });
+}
+
 el('checkBtn').addEventListener('click', checkForward);
 el('hearBtn').addEventListener('click', function () { if (lastVerdictText) speak(lastVerdictText); });
 el('testBtn').addEventListener('click', testInternet);
@@ -838,6 +1038,12 @@ el('lockForgotLink').addEventListener('click', function (ev) {
 });
 el('recExportBtn').addEventListener('click', exportBackup);
 el('recFile').addEventListener('change', function () { if (this.files && this.files[0]) importBackup(this.files[0]); });
+el('musFile').addEventListener('change', function () {
+  var list = [];
+  for (var i = 0; this.files && i < this.files.length; i++) list.push(this.files[i]);
+  this.value = '';
+  if (list.length) musAdd(list);
+});
 
 (function init() {
   try {
@@ -847,6 +1053,7 @@ el('recFile').addEventListener('change', function () { if (this.files && this.fi
   render();
   loadNotes();
   renderCash();
+  renderMusic();
   try {
     var savedLoc = localStorage.getItem('satar-loc');
     if (savedLoc) {
@@ -862,6 +1069,12 @@ el('recFile').addEventListener('change', function () { if (this.files && this.fi
     if (lockIsSet() && !sessionStorage.getItem('satar-unlocked')) showLockOverlay();
   } catch (e) {}
 })();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(function () {});
+  });
+}
 </script>
 </body>
 </html>
