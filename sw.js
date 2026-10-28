@@ -1,7 +1,7 @@
 /* Satar service worker. It keeps Satar on this phone so it opens with no
    internet after the first visit. It only touches files from this same site
    and never contacts any other address. Bump CACHE when the files change. */
-var CACHE = 'satar-v1';
+var CACHE = 'satar-v2';
 var CORE = [
   './',
   'index.html',
@@ -10,6 +10,19 @@ var CORE = [
   'icons/icon-512.png',
   'icons/icon-maskable-512.png',
   'icons/apple-touch-icon.png',
+  'icons/eye-256.webp',
+  'fonts/fonts.css',
+  'fonts/amiri-400-italic-arabic.woff2',
+  'fonts/amiri-400-italic-latin.woff2',
+  'fonts/amiri-400-normal-arabic.woff2',
+  'fonts/amiri-400-normal-latin.woff2',
+  'fonts/cormorant-garamond-400-italic-cyrillic.woff2',
+  'fonts/cormorant-garamond-400-italic-latin.woff2',
+  'fonts/cormorant-garamond-400-normal-cyrillic.woff2',
+  'fonts/cormorant-garamond-400-normal-latin.woff2',
+  'fonts/jost-300-normal-cyrillic.woff2',
+  'fonts/jost-300-normal-latin.woff2',
+  'fonts/marcellus-400-normal-latin.woff2',
   'v3/index.html',
   'v3/arab.webmanifest',
   'v3/plain.html',

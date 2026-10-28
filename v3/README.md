@@ -84,6 +84,9 @@ and open that edition directly. When the files change, bump `CACHE` in
 ## Other files
 
 - `LICENSE` — MIT licence.
+- `../fonts/` — the fonts from the Satar ad (Cormorant Garamond, Marcellus,
+  Jost, Amiri), served from this site so nothing is loaded from outside.
+  They are under the SIL Open Font License 1.1; see `../fonts/OFL.txt`.
 - `STORY.md` — who made Satar and when, so nobody plays dumb about
   ownership.
 
