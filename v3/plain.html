@@ -212,6 +212,14 @@
   <div id="musList"></div>
   <p class="note" id="musEmpty" data-t="musEmpty"></p>
   <p class="note" data-t="musNote"></p>
+
+  <h2 data-t="freeTitle"></h2>
+  <p data-t="freeText"></p>
+  <button type="button" id="radioBtn" data-t="radioBtn"></button>
+  <button type="button" id="radioStopBtn" class="small" data-t="radioStop" style="display:none"></button>
+  <div class="row" id="radioNow"></div>
+  <div id="freeList"></div>
+  <p class="note" data-t="radioNote"></p>
 </section>
 
 <footer>
@@ -292,6 +300,10 @@ musTitle: '7. My music', musText: 'Add songs that are already on your phone. The
 musAdd: 'Add songs from this phone:', musEmpty: 'No songs yet.', musPlay: 'Play', musDel: 'Delete', musAdded: 'Songs added: {n}.',
 musFail: 'Some files could not be added (not a song, or storage is full).', musNo: 'Music storage is not available in this browser.',
 musNote: 'Songs stay on this phone only and are not in the backup file. On iPhone, music may stop when the screen locks. Only add songs you have the right to play.',
+freeTitle: 'Free music in Satar', freeText: 'Melodies that are free for everyone (public domain), arranged and played for Satar. They play from this site; tap “Keep” to have one on this phone with no internet.',
+musKeep: 'Keep', musKept: 'Kept on this phone.', musNeedNet: 'Not on this phone yet. Connect once and tap “Keep”.',
+radioBtn: '📻 Satar Radio', radioStop: 'Stop', radioNow: 'Now playing:', radioEmpty: 'Nothing to play yet.',
+radioNote: 'Satar Radio plays the free music and your own songs, one after another. With no internet it plays only what is on this phone.',
 recMailBody: 'Satar backup — I will attach the downloaded satar-backup.json file by hand.',
 recSmsBody: 'Satar backup — I will attach the downloaded file by hand.'
 },
@@ -339,6 +351,10 @@ musTitle: '٧. موسيقاي', musText: 'أضف أغاني موجودة بال�
 musAdd: 'أضف أغاني من هذا الهاتف:', musEmpty: 'لا أغاني بعد.', musPlay: 'شغّل', musDel: 'احذف', musAdded: 'أغانٍ أضيفت: {n}.',
 musFail: 'تعذرت إضافة بعض الملفات (ليست أغنية، أو التخزين ممتلئ).', musNo: 'تخزين الموسيقى غير متاح في هذا المتصفح.',
 musNote: 'الأغاني تبقى على هذا الهاتف فقط وليست في ملف النسخة الاحتياطية. على آيفون قد تتوقف الموسيقى عند قفل الشاشة. أضف فقط أغاني يحق لك تشغيلها.',
+freeTitle: 'موسيقى مجانية في ستار', freeText: 'ألحان حرّة للجميع (ملكية عامة)، وُزّعت وعُزفت لستار. تُشغَّل من هذا الموقع؛ اضغط «احفظ» لتبقى على هذا الهاتف وتعمل بلا إنترنت.',
+musKeep: 'احفظ', musKept: 'حُفظت على هذا الهاتف.', musNeedNet: 'ليست على هذا الهاتف بعد. اتصل بالإنترنت مرة واضغط «احفظ».',
+radioBtn: '📻 راديو ستار', radioStop: 'إيقاف', radioNow: 'يُشغَّل الآن:', radioEmpty: 'لا يوجد ما يُشغَّل بعد.',
+radioNote: 'راديو ستار يشغّل الموسيقى المجانية وأغانيك واحدة بعد الأخرى. بلا إنترنت يشغّل فقط ما هو محفوظ على هذا الهاتف.',
 recMailBody: 'نسخة ستار الاحتياطية — سأرفق ملف satar-backup.json المنزّل بنفسي.',
 recSmsBody: 'نسخة ستار الاحتياطية — سأرفق الملف المنزّل بنفسي.'
 },
@@ -386,6 +402,10 @@ musTitle: '7. 我的音乐', musText: '添加你手机里已有的歌曲。它�
 musAdd: '从这部手机添加歌曲：', musEmpty: '还没有歌曲。', musPlay: '播放', musDel: '删除', musAdded: '已添加歌曲：{n}。',
 musFail: '有些文件无法添加（不是歌曲，或存储已满）。', musNo: '这个浏览器不支持保存音乐。',
 musNote: '歌曲只保存在这部手机上，不在备份文件里。在 iPhone 上，锁屏时音乐可能会停止。只添加你有权播放的歌曲。',
+freeTitle: 'Satar 里的免费音乐', freeText: '人人都可自由使用的旋律（公有领域），为 Satar 编配和演奏。它们从本网站播放；点“保存”即可存到这部手机上，无网也能播放。',
+musKeep: '保存', musKept: '已保存到这部手机。', musNeedNet: '还没有保存到这部手机。请联网一次并点“保存”。',
+radioBtn: '📻 Satar 电台', radioStop: '停止', radioNow: '正在播放：', radioEmpty: '暂时没有可播放的内容。',
+radioNote: 'Satar 电台依次播放免费音乐和你自己的歌曲。没有网络时，只播放这部手机上已有的。',
 recMailBody: 'Satar 备份——我会手动附上下载的 satar-backup.json 文件。',
 recSmsBody: 'Satar 备份——我会手动附上下载的文件。'
 },
@@ -505,6 +525,16 @@ musAdded: 'Добавлено песен: {n}.',
 musFail: 'Некоторые файлы не удалось добавить (это не песня или хранилище заполнено).',
 musNo: 'Хранилище музыки недоступно в этом браузере.',
 musNote: 'Песни остаются только на этом телефоне и не входят в файл резервной копии. На iPhone музыка может остановиться, когда экран блокируется. Добавляйте только песни, которые вы вправе слушать.',
+freeTitle: 'Бесплатная музыка в Сатаре',
+freeText: 'Мелодии, свободные для всех (общественное достояние), аранжированные и сыгранные для Сатара. Они играют с этого сайта; нажмите «Сохранить», чтобы мелодия была на телефоне и играла без интернета.',
+musKeep: 'Сохранить',
+musKept: 'Сохранено на этом телефоне.',
+musNeedNet: 'Пока нет на этом телефоне. Подключитесь один раз и нажмите «Сохранить».',
+radioBtn: '📻 Радио Сатар',
+radioStop: 'Стоп',
+radioNow: 'Сейчас играет:',
+radioEmpty: 'Пока нечего играть.',
+radioNote: 'Радио Сатар играет бесплатную музыку и ваши песни одну за другой. Без интернета — только то, что есть на этом телефоне.',
 recMailBody: 'Резервная копия Сатара — я сам прикреплю скачанный файл satar-backup.json.',
 recSmsBody: 'Резервная копия Сатара — я сам прикреплю скачанный файл.'
 }
@@ -539,6 +569,7 @@ function setLang(l) {
   LANG = l;
   try { localStorage.setItem('satar-lang', l); } catch (e) {}
   render();
+  renderMusic();
 }
 
 function showVerdict(box, kind, title, reason, action) {
@@ -965,7 +996,7 @@ function musButton(key, fn) {
 
 function renderMusic() {
   musOpen(function (db) {
-    if (!db) { el('musEmpty').style.display = 'block'; return; }
+    if (!db) { el('musEmpty').style.display = 'block'; renderFree([]); return; }
     var items = [];
     try {
       var cur = db.transaction('meta', 'readonly').objectStore('meta').openCursor();
@@ -981,37 +1012,162 @@ function renderMusic() {
           name.dir = 'auto';
           name.textContent = s.name;
           var btns = document.createElement('span');
-          btns.appendChild(musButton('musPlay', function () { musPlay(s.id); }));
+          btns.appendChild(musButton('musPlay', function () { musPlay(s.id, s.name); }));
           btns.appendChild(musButton('musDel', function () { musDelete(s.id); }));
           row.appendChild(name);
           row.appendChild(btns);
           box.appendChild(row);
         });
         el('musEmpty').style.display = items.length ? 'none' : 'block';
+        renderFree(items);
       };
     } catch (e) {}
   });
 }
 
-function musPlay(id) {
+function musPlay(id, name) {
+  radioStop();
+  playItem({ idb: id, name: name || '' });
+}
+
+// Free music: public-domain melodies, arranged and played for Satar (see music/README.md).
+var FREE = [
+  { id: 'ode-to-joy', t: { en: 'Ode to Joy', ar: 'نشيد الفرح', ru: 'Ода к радости', zh: '欢乐颂' } },
+  { id: 'fur-elise', t: { en: 'Für Elise', ar: 'إلى إليزا', ru: 'К Элизе', zh: '致爱丽丝' } },
+  { id: 'greensleeves', t: { en: 'Greensleeves', ar: 'الأكمام الخضراء', ru: 'Зелёные рукава', zh: '绿袖子' } },
+  { id: 'canon-in-d', t: { en: 'Canon in D', ar: 'كانون في ري الكبير', ru: 'Канон ре мажор', zh: 'D大调卡农' } },
+  { id: 'gymnopedie-1', t: { en: 'Gymnopédie No. 1', ar: 'جيمنوبيدي رقم ١', ru: 'Гимнопедия № 1', zh: 'Gymnopédie 第1号' } },
+  { id: 'twinkle', t: { en: 'Twinkle, Twinkle', ar: 'تلألأ يا نجمي الصغير', ru: 'Мерцай, звёздочка', zh: '小星星' } },
+  { id: 'frere-jacques', t: { en: 'Frère Jacques', ar: 'الأخ جاك', ru: 'Братец Яков', zh: '两只老虎' } }
+];
+var radioOn = false, radioQueue = [], radioPos = 0, radioFails = 0;
+
+function freeTitle(s) { return s.t[LANG] || s.t.en; }
+
+function musAll(cb) {
+  musOpen(function (db) {
+    if (!db) { cb([]); return; }
+    var items = [];
+    try {
+      var cur = db.transaction('meta', 'readonly').objectStore('meta').openCursor();
+      cur.onsuccess = function () {
+        var c = cur.result;
+        if (c) { items.push(c.value); c['continue'](); return; }
+        cb(items);
+      };
+      cur.onerror = function () { cb([]); };
+    } catch (e) { cb([]); }
+  });
+}
+
+function keptId(items, freeId) {
+  for (var i = 0; i < items.length; i++) if (items[i].free === freeId) return items[i].id;
+  return null;
+}
+
+function freeItem(s, items) {
+  var id = keptId(items, s.id);
+  return id !== null ? { idb: id, name: freeTitle(s) } : { url: '../music/' + s.id + '.mp3', name: freeTitle(s) };
+}
+
+function renderFree(items) {
+  var box = el('freeList');
+  box.textContent = '';
+  FREE.forEach(function (s) {
+    var row = document.createElement('div');
+    row.className = 'songrow';
+    var name = document.createElement('span');
+    name.dir = 'auto';
+    name.textContent = freeTitle(s);
+    var btns = document.createElement('span');
+    btns.appendChild(musButton('musPlay', function () { radioStop(); playItem(freeItem(s, items)); }));
+    if (keptId(items, s.id) === null) {
+      btns.appendChild(musButton('musKeep', function () { keepFree(s); }));
+    } else {
+      var ok = document.createElement('span');
+      ok.className = 'note';
+      ok.textContent = ' ✓';
+      btns.appendChild(ok);
+    }
+    row.appendChild(name);
+    row.appendChild(btns);
+    box.appendChild(row);
+  });
+}
+
+function keepFree(s) {
+  fetch('../music/' + s.id + '.mp3').then(function (r) {
+    if (!r.ok) throw new Error('not ok');
+    return r.arrayBuffer();
+  }).then(function (buf) {
+    musOpen(function (db) {
+      if (!db) { el('musMsg').textContent = T('musNo'); return; }
+      try {
+        var tx = db.transaction(['meta', 'data'], 'readwrite');
+        var r = tx.objectStore('meta').add({ name: '♪ ' + freeTitle(s), type: 'audio/mpeg', size: buf.byteLength, added: new Date().toISOString().slice(0, 10), free: s.id });
+        r.onsuccess = function () { tx.objectStore('data').put(buf, r.result); };
+        tx.oncomplete = function () { el('musMsg').textContent = T('musKept'); renderMusic(); };
+        tx.onabort = function () { el('musMsg').textContent = T('musFail'); };
+      } catch (e) { el('musMsg').textContent = T('musFail'); }
+    });
+  }).catch(function () { el('musMsg').textContent = T('musNeedNet'); });
+}
+
+function playItem(item) {
+  var p = el('musPlayer');
+  function start(src) {
+    if (musURL) { URL.revokeObjectURL(musURL); musURL = null; }
+    if (src.blob) { musURL = URL.createObjectURL(src.blob); p.src = musURL; } else { p.src = src.url; }
+    p.style.display = 'block';
+    el('radioNow').textContent = item.name ? T('radioNow') + ' ' + item.name : '';
+    var pr = p.play();
+    if (pr && pr.catch) pr.catch(function () {});
+  }
+  if (item.url) { start({ url: item.url }); return; }
   musOpen(function (db) {
     if (!db) return;
     try {
       var tx = db.transaction(['meta', 'data'], 'readonly');
-      var m = tx.objectStore('meta').get(id);
-      var d = tx.objectStore('data').get(id);
+      var m = tx.objectStore('meta').get(item.idb);
+      var d = tx.objectStore('data').get(item.idb);
       tx.oncomplete = function () {
-        if (!m.result || !d.result) return;
-        var p = el('musPlayer');
-        if (musURL) URL.revokeObjectURL(musURL);
-        musURL = URL.createObjectURL(new Blob([d.result], { type: m.result.type }));
-        p.src = musURL;
-        p.style.display = 'block';
-        var pr = p.play();
-        if (pr && pr.catch) pr.catch(function () {});
+        if (!m.result || !d.result) { radioNext(); return; }
+        start({ blob: new Blob([d.result], { type: m.result.type }) });
       };
     } catch (e) {}
   });
+}
+
+function radioStart() {
+  musAll(function (items) {
+    var q = [];
+    var online = navigator.onLine !== false;
+    FREE.forEach(function (s) {
+      var it = freeItem(s, items);
+      if (it.idb !== undefined || online) q.push(it);
+    });
+    items.forEach(function (m) { if (!m.free) q.push({ idb: m.id, name: m.name }); });
+    if (!q.length) { radioStop(); el('radioNow').textContent = T('radioEmpty'); return; }
+    for (var i = q.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var x = q[i]; q[i] = q[j]; q[j] = x;
+    }
+    radioQueue = q; radioPos = 0; radioFails = 0; radioOn = true;
+    el('radioStopBtn').style.display = '';
+    playItem(radioQueue[0]);
+  });
+}
+
+function radioNext() {
+  if (!radioOn) return;
+  radioPos++;
+  if (radioPos >= radioQueue.length) { radioStart(); return; }
+  playItem(radioQueue[radioPos]);
+}
+
+function radioStop() {
+  radioOn = false;
+  el('radioStopBtn').style.display = 'none';
 }
 
 function musDelete(id) {
@@ -1083,6 +1239,16 @@ el('musFile').addEventListener('change', function () {
   for (var i = 0; this.files && i < this.files.length; i++) list.push(this.files[i]);
   this.value = '';
   if (list.length) musAdd(list);
+});
+el('radioBtn').addEventListener('click', radioStart);
+el('radioStopBtn').addEventListener('click', function () { radioStop(); el('musPlayer').pause(); el('radioNow').textContent = ''; });
+el('musPlayer').addEventListener('ended', radioNext);
+el('musPlayer').addEventListener('playing', function () { radioFails = 0; });
+el('musPlayer').addEventListener('error', function () {
+  if (!radioOn) { el('musMsg').textContent = T('musNeedNet'); return; }
+  radioFails++;
+  if (radioFails >= radioQueue.length) { radioStop(); el('radioNow').textContent = T('radioEmpty'); return; }
+  radioNext();
 });
 
 (function init() {

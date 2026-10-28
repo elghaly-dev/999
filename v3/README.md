@@ -50,7 +50,12 @@ it in a browser. Every edition has:
     or SMS app, by hand.
   - My music: add songs that are already on the phone. They are kept
     inside the app on that phone (IndexedDB) and play with no internet.
-    Nothing is downloaded. Songs are not in the backup file.
+    Songs are not in the backup file.
+  - Free music in Satar: seven public-domain melodies, arranged and
+    played for Satar (`../music/`, see its README). They play from the
+    site; "Keep" stores one on the phone so it plays with no internet.
+  - Satar Radio: plays the free music and the phone's own songs one
+    after another. With no internet it plays only what is on the phone.
   - Honest limits card.
 
 Only the Arab edition (`index.html`) has:
@@ -108,8 +113,6 @@ and open that edition directly. When the files change, bump `CACHE` in
 
 - Share a warning as text or a QR code, by hand, phone to phone. Not built
   yet.
-- A small built-in music pack of songs that are free to share (public
-  domain or CC0), once the licensed files are chosen. Not built yet.
 
 ## Rules
 
