@@ -4,61 +4,101 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Satar</title>
-<meta name="theme-color" content="#7c3aed">
+<meta name="theme-color" content="#07080d">
+<link rel="stylesheet" href="../fonts/fonts.css">
 <link rel="manifest" href="arab.webmanifest">
 <link rel="icon" type="image/png" href="../icons/icon-192.png">
 <link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="Satar">
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: system-ui, sans-serif; max-width: 660px; margin: 0 auto; padding: 16px; line-height: 1.5; background: linear-gradient(135deg, #7c3aed, #c026d3, #9333ea); background-attachment: fixed; color: #fff; }
-  h1 { font-size: 2rem; margin: 4px 0 0; text-shadow: 0 2px 12px rgba(0,0,0,0.25); text-align: center; }
-  .sub { margin-top: 4px; opacity: 0.95; text-align: center; }
-  .emblem { width: 88px; height: 88px; margin: 8px auto 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 44px; background: radial-gradient(circle at 50% 50%, #ffffff 0 22%, #7c9cf0 23% 42%, #1e2a78 43% 62%, #d4af5a 63% 70%, #7c3aed 71% 100%); box-shadow: 0 6px 24px rgba(0,0,0,0.35); border: 2px solid rgba(255,255,255,0.6); }
-  .langbar { text-align: center; margin: 12px 0; }
-  .langbar button { font-size: 0.95rem; padding: 8px 14px; }
-  .langbar button.on { background: rgba(255,255,255,0.9); color: #6d28d9; }
-  section { background: rgba(255,255,255,0.16); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.35); border-radius: 20px; padding: 16px; margin: 16px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
-  h2 { margin-top: 0; font-size: 1.2rem; }
-  textarea, input[type=text], input[type=number], input[type=password] { width: 100%; font-size: 1rem; padding: 10px; box-sizing: border-box; border-radius: 12px; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.2); color: inherit; margin: 4px 0; }
-  textarea { min-height: 110px; }
-  textarea::placeholder, input::placeholder { color: rgba(255,255,255,0.7); }
-  select { font-size: 1rem; padding: 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.4); background: rgba(147,51,234,0.55); color: #fff; margin: 4px 0; }
-  button { font-size: 1.05rem; padding: 12px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.5); background: rgba(147,51,234,0.55); color: #fff; cursor: pointer; margin: 8px 8px 8px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
-  button.small { font-size: 0.9rem; padding: 8px 14px; }
-  .verdict { font-size: 1.4rem; font-weight: bold; padding: 12px; border-radius: 14px; margin: 12px 0; }
-  .danger { background: rgba(248,215,218,0.9); color: #721c24; }
-  .unknown { background: rgba(255,243,205,0.9); color: #856404; }
-  .safe { background: rgba(212,237,218,0.9); color: #155724; }
-  .note { font-size: 0.9rem; opacity: 0.85; }
-  .row { margin: 6px 0; }
-  label { display: block; margin: 8px 0; }
-  table { width: 100%; border-collapse: collapse; margin: 8px 0; }
-  td { padding: 6px 4px; border-bottom: 1px solid rgba(255,255,255,0.25); }
-  td.t { font-weight: bold; }
-  tr.next td { background: rgba(255,255,255,0.25); }
-  .cashrow { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.25); }
-  .in { color: #a3e6b5; } .out { color: #ffb3b3; }
-  footer { text-align: center; font-size: 0.95rem; opacity: 0.95; margin: 24px 0 8px; }
-  .licfoot { text-align: center; font-size: 0.85rem; opacity: 0.8; margin: 4px 0 24px; }
-  #lockOverlay { display: none; position: fixed; inset: 0; z-index: 99; background: rgba(30,10,60,0.96); align-items: center; justify-content: center; }
-  #lockOverlay.open { display: flex; }
-  #lockBox { background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 24px; max-width: 360px; width: 90%; text-align: center; }
-  #lockBox input { text-align: center; font-size: 1.4rem; letter-spacing: 0.4em; }
-  .draftbanner { background: rgba(255,215,0,0.9); color: #3a2a00; font-weight: bold; border-radius: 12px; padding: 10px; text-align: center; margin: 12px 0; }
-  @media (prefers-color-scheme: dark) {
-    .danger { background: rgba(90,26,26,0.85); color: #ffb3b3; }
-    .unknown { background: rgba(90,74,0,0.85); color: #ffe08a; }
-    .safe { background: rgba(20,61,31,0.85); color: #a3e6b5; }
+  :root {
+    color-scheme: dark;
+    --night: #07080d;
+    --night-2: #0b0d17;
+    --panel: #101322;
+    --ivory: #ece4d1;
+    --ivory-dim: #b9b2a0;
+    --ivory-faint: #8b8574;
+    --gold: #d4af5a;
+    --gold-deep: #a9853c;
+    --gold-hair: rgba(212, 175, 90, 0.34);
+    --violet: #9a7bff;
+    --violet-deep: #5b3df0;
+    --danger: #ff7a66;
+    --danger-bg: rgba(229, 72, 77, 0.12);
+    --safe: #63cf96;
+    --safe-bg: rgba(63, 178, 127, 0.12);
+    --serif: "Cormorant Garamond", "Times New Roman", serif;
+    --caps: "Marcellus", "Cormorant Garamond", serif;
+    --sans: "Jost", "Segoe UI", system-ui, sans-serif;
+    --ar: "Amiri", serif;
   }
-  .chip { display: inline-block; font-size: 0.95rem; font-weight: normal; padding: 2px 10px; margin: 4px 4px 0 0; border-radius: 999px; border: 1px solid currentColor; }
-  .songrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.25); }
+  * { box-sizing: border-box; }
+  ::selection { background: rgba(212, 175, 90, 0.35); color: #fff; }
+  body { max-width: 660px; margin: 0 auto; padding: 16px; line-height: 1.65; font-family: var(--sans); font-weight: 300; color: var(--ivory); -webkit-font-smoothing: antialiased;
+    background: radial-gradient(1100px 700px at 50% -10%, rgba(91, 61, 240, 0.16), transparent 60%),
+      radial-gradient(900px 600px at 85% 38%, rgba(212, 175, 90, 0.05), transparent 55%),
+      var(--night); background-attachment: fixed; }
+  html[lang="ar"] body { font-family: var(--ar), var(--sans); }
+  a { color: var(--gold); }
+  h1 { font-family: var(--caps); font-weight: 400; font-size: 2.6rem; letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase; line-height: 1; margin: 16px 0 0; text-align: center; color: var(--ivory); }
+  .sub { font-family: var(--serif); font-style: italic; font-size: 1.3rem; line-height: 1.35; color: var(--ivory-dim); text-align: center; margin: 14px auto 0; max-width: 34ch; }
+  html[lang="ar"] .sub { font-family: var(--ar); font-style: normal; }
+  .emblem { position: relative; width: 120px; height: 120px; margin: 8px auto 0; }
+  .emblem::before { content: ""; position: absolute; inset: 6% 10%; border-radius: 50%; background: radial-gradient(circle, rgba(122, 92, 255, 0.4), rgba(91, 61, 240, 0.12) 55%, transparent 72%); filter: blur(14px); }
+  .emblem img { position: relative; width: 100%; height: 100%; display: block; border-radius: 50%; -webkit-mask-image: radial-gradient(circle, #000 62%, transparent 71%); mask-image: radial-gradient(circle, #000 62%, transparent 71%); }
+  button { font-family: var(--sans); font-size: 1rem; font-weight: 400; letter-spacing: 0.04em; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--gold); background: transparent; color: var(--gold); cursor: pointer; margin: 8px 8px 8px 0; transition: background 0.3s, color 0.3s, border-color 0.3s; }
+  button:hover { background: var(--gold); color: #0a0a08; }
+  button:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; }
+  button.small { font-size: 0.9rem; padding: 6px 14px; }
+  .langbar { text-align: center; margin: 18px 0; }
+  .langbar button { font-size: 0.95rem; padding: 7px 16px; margin: 3px; border-color: rgba(236, 228, 209, 0.22); color: var(--ivory-dim); }
+  .langbar button:hover { border-color: var(--gold); background: transparent; color: var(--ivory); }
+  .langbar button.on { background: var(--gold); border-color: var(--gold); color: #0a0a08; font-weight: 500; }
+  section { background: linear-gradient(165deg, var(--panel), var(--night-2)); border: 1px solid rgba(212, 175, 90, 0.22); border-radius: 18px; padding: 20px; margin: 18px 0; }
+  h2 { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; line-height: 1.25; margin: 18px 0 8px; color: var(--ivory); }
+  section > h2:first-child { margin-top: 0; color: var(--gold); }
+  html[lang="ar"] h2 { font-family: var(--ar); font-weight: 400; }
+  textarea, input[type=text], input[type=number], input[type=password] { width: 100%; font-family: var(--sans); font-size: 1rem; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(212, 175, 90, 0.22); background: rgba(7, 8, 13, 0.6); color: var(--ivory); margin: 4px 0; }
+  textarea { min-height: 110px; font-family: var(--serif); font-size: 1.15rem; line-height: 1.4; }
+  html[lang="ar"] textarea { font-family: var(--ar); }
+  textarea:focus, input:focus, select:focus { outline: none; border-color: var(--gold); }
+  textarea::placeholder, input::placeholder { color: var(--ivory-faint); }
+  select { font-family: var(--sans); font-size: 1rem; padding: 10px; border-radius: 12px; border: 1px solid rgba(212, 175, 90, 0.22); background: var(--panel); color: var(--ivory); margin: 4px 0; }
+  .verdict { font-family: var(--caps); font-size: 1.35rem; letter-spacing: 0.12em; padding: 12px 16px; border: 1.5px solid currentColor; border-radius: 6px; margin: 14px 0; }
+  .verdict > div + div { font-family: var(--serif); letter-spacing: 0; color: var(--ivory); }
+  html[lang="ar"] .verdict, html[lang="ar"] .verdict > div + div { font-family: var(--ar); letter-spacing: 0; }
+  .danger { color: var(--danger); background: var(--danger-bg); }
+  .unknown { color: var(--gold); background: rgba(212, 175, 90, 0.1); }
+  .safe { color: var(--safe); background: var(--safe-bg); }
+  .chip { display: inline-block; font-family: var(--sans); font-size: 0.95rem; font-weight: 400; letter-spacing: 0; padding: 2px 10px; margin: 4px 4px 0 0; border-radius: 999px; border: 1px solid currentColor; }
+  .note { font-size: 0.9rem; color: var(--ivory-faint); }
+  .row { margin: 6px 0; }
+  label { display: block; margin: 8px 0; color: var(--ivory-dim); }
+  li { color: var(--ivory-dim); margin: 4px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  td { padding: 6px 4px; border-bottom: 1px solid rgba(212, 175, 90, 0.14); }
+  td.t { font-weight: 500; }
+  tr.next td { background: rgba(212, 175, 90, 0.12); color: var(--gold); }
+  .cashrow { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(212, 175, 90, 0.14); }
+  .in { color: var(--safe); } .out { color: var(--danger); }
+  .songrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(212, 175, 90, 0.14); }
   .songrow span { overflow-wrap: anywhere; }
   audio { width: 100%; margin: 8px 0; }
+  footer { text-align: center; margin: 32px 0 8px; color: var(--ivory-dim); }
+  footer > div:first-child { font-family: var(--serif); font-style: italic; font-size: 1.35rem; color: var(--ivory); margin-bottom: 6px; }
+  .licfoot { text-align: center; font-size: 0.8rem; color: var(--ivory-faint); margin: 6px 0 28px; }
+  #lockOverlay { display: none; position: fixed; inset: 0; z-index: 99; background: rgba(7, 8, 13, 0.97); align-items: center; justify-content: center; }
+  #lockOverlay.open { display: flex; }
+  #lockBox { background: linear-gradient(165deg, var(--panel), var(--night-2)); border: 1px solid rgba(212, 175, 90, 0.3); border-radius: 18px; padding: 24px; max-width: 360px; width: 90%; text-align: center; }
+  #lockBox h2 { font-family: var(--caps); font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ivory); }
+  #lockBox input { text-align: center; font-size: 1.4rem; letter-spacing: 0.4em; }
+  .draftbanner { background: rgba(212, 175, 90, 0.14); color: var(--gold); border: 1px solid var(--gold-hair); border-radius: 12px; padding: 10px; text-align: center; margin: 12px 0; font-family: var(--caps); letter-spacing: 0.12em; }
+  @media (prefers-reduced-motion: reduce) { button { transition: none; } }
 </style>
 </head>
 <body>
-<div class="emblem">🧿</div>
+<div class="emblem"><img src="../icons/eye-256.webp" alt="" width="120" height="120"></div>
 <h1>Satar</h1>
 <p class="sub" data-t="sub"></p>
 <div class="langbar">
@@ -205,7 +245,7 @@
 
 <div id="lockOverlay">
   <div id="lockBox">
-    <div class="emblem">🧿</div>
+    <div class="emblem"><img src="../icons/eye-256.webp" alt="" width="120" height="120"></div>
     <h2>Satar</h2>
     <p data-t="lockEnter"></p>
     <input type="password" id="unlockPass" inputmode="numeric" autocomplete="off" placeholder="••••">
@@ -213,7 +253,7 @@
     <button type="button" id="unlockBtn" data-t="lockUnlock"></button>
     <button type="button" id="unlockFaceBtn" data-t="lockFace" style="display:none"></button>
     <div class="row" id="unlockMsg"></div>
-    <p><a href="#" id="lockForgotLink" data-t="lockForgot" style="color:#fff"></a></p>
+    <p><a href="#" id="lockForgotLink" data-t="lockForgot"></a></p>
   </div>
 </div>
 
