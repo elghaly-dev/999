@@ -1,7 +1,7 @@
 /* Satar service worker. It keeps Satar on this phone so it opens with no
    internet after the first visit. It only touches files from this same site
    and never contacts any other address. Bump CACHE when the files change. */
-var CACHE = 'satar-v2';
+var CACHE = 'satar-v3';
 var CORE = [
   './',
   'index.html',

@@ -18,12 +18,11 @@ Russian, English, and Chinese read left-to-right.
 
 - `index.html` — the Arab edition. Prayer times plus the Adhan. This is
   the main edition.
-- `israel.html` — DRAFT edition, to confirm, not final. It adds some
-  Talmud content and leaves out the Adhan and prayer times. Nothing in
-  it is final until the owner confirms it.
-- `plain.html` — the no-prayer edition. Neither prayer times nor Adhan
-  nor Talmud content. The forward check, voice, Local Mode, cash
-  notebook, lock, and recovery are all in it, in all four languages.
+- `plain.html` — the no-prayer edition. Neither prayer times nor Adhan.
+  The forward check, voice, Local Mode, cash notebook, lock, and
+  recovery are all in it, in all four languages.
+- `christian.html` — the Christian edition: four daily prayers (morning,
+  third hour, sunset, sleep).
 
 ## What each file has
 
@@ -60,10 +59,6 @@ Only the Arab edition (`index.html`) has:
     and GPS position. Approximate — check your local mosque for exact
     times. The Adhan is announced by voice.
 
-Only the Jewish edition (`israel.html`, draft) has:
-
-  - Wisdom: three teachings from the Talmud, shared with respect.
-
 ## How to open
 
 Open any edition in a browser. Everything works from the file itself,
@@ -83,7 +78,7 @@ and open that edition directly. When the files change, bump `CACHE` in
 
 ## Other files
 
-- `LICENSE` — MIT licence.
+- `LICENSE` — all rights reserved (same text as `../LICENSE`).
 - `../fonts/` — the fonts from the Satar ad (Cormorant Garamond, Marcellus,
   Jost, Amiri), served from this site so nothing is loaded from outside.
   They are under the SIL Open Font License 1.1; see `../fonts/OFL.txt`.

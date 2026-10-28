@@ -13,17 +13,17 @@ Credit line in the app, exact: "Made by Wyndham Heaven and Muse 3️⃣💡5️�
 - 27 October 2026 — v2: glass and purple style (💜).
 - 28 October 2026 — v3: prayer times, voice, 3 languages (Arabic, English,
   Chinese), cash notebook, credit, lock, recovery, MIT licence, and this
-  story. An Israel edition was drafted the same day as a content variant
-  to confirm — same work, same name — and it is not final.
-- 28 October 2026 — Russian added to all three editions, and a third
-  no-prayer edition built, per the owner. The three editions are the
-  Arab edition (prayer + Adhan), the Jewish edition (Talmud, no Adhan),
-  and the no-prayer edition (neither) — all in Russian, Arabic, English,
-  and Chinese.
+  story.
+- 28 October 2026 — Russian added to all editions, and the no-prayer
+  edition built, per the owner. Then the Christian edition.
+- 28 October 2026 — works offline and installs to the Home Screen; the
+  verdict says "No warning signs found" instead of "safe"; "My music";
+  the look of the Satar ad.
+- 28 October 2026 — licence closed: all rights reserved (see LICENSE).
 
 ## Where
 
-v1, v2 and v3 sit in the private repo elghaly-dev/999, main branch, under the name 999 (v3 in the v3/ folder, pushed 28 October 2026). The app itself is called Satar, and that name does not change.
+v1, v2 and v3 sit in the repo elghaly-dev/999 (now public), main branch, under the name 999 (v3 in the v3/ folder, pushed 28 October 2026). The app itself is called Satar, and that name does not change.
 
 ## What it is for
 
