@@ -1,7 +1,7 @@
 /* Satar service worker. It keeps Satar on this phone so it opens with no
    internet after the first visit. It only touches files from this same site
    and never contacts any other address. Bump CACHE when the files change. */
-var CACHE = 'satar-v3';
+var CACHE = 'satar-v4';
 var CORE = [
   './',
   'index.html',
@@ -52,7 +52,10 @@ self.addEventListener('activate', function (e) {
 self.addEventListener('fetch', function (e) {
   var req = e.request;
   if (req.method !== 'GET') return;
-  if (new URL(req.url).origin !== self.location.origin) return;
+  var url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+  // Music streams with range requests; "Keep" stores it on the phone instead of this cache.
+  if (url.pathname.indexOf('/music/') !== -1) return;
   e.respondWith(caches.open(CACHE).then(function (c) {
     return c.match(req, { ignoreSearch: true }).then(function (hit) {
       var fresh = fetch(req).then(function (res) {
