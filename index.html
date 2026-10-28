@@ -3,196 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Forward Checker</title>
+<title>Satar</title>
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 0 auto; padding: 16px; line-height: 1.5; background: linear-gradient(135deg, #7c3aed, #c026d3, #9333ea); background-attachment: fixed; color: #fff; }
-  h1 { font-size: 1.8rem; margin-bottom: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.25); }
-  .sub { margin-top: 4px; opacity: 0.9; }
-  section { background: rgba(255,255,255,0.16); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.35); border-radius: 20px; padding: 16px; margin: 16px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
-  h2 { margin-top: 0; font-size: 1.2rem; }
-  textarea { width: 100%; min-height: 110px; font-size: 1rem; padding: 10px; box-sizing: border-box; border-radius: 12px; border: 1px solid rgba(255,255,255,0.4); background: rgba(255,255,255,0.2); color: inherit; }
-  textarea::placeholder { color: rgba(255,255,255,0.7); }
-  button { font-size: 1.05rem; padding: 12px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.5); background: rgba(147,51,234,0.55); color: #fff; cursor: pointer; margin: 8px 8px 8px 0; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
-  .verdict { font-size: 1.4rem; font-weight: bold; padding: 12px; border-radius: 14px; margin: 12px 0; }
-  .danger { background: rgba(248,215,218,0.9); color: #721c24; }
-  .unknown { background: rgba(255,243,205,0.9); color: #856404; }
-  .safe { background: rgba(212,237,218,0.9); color: #155724; }
-  .note { font-size: 0.9rem; opacity: 0.85; }
-  .row { margin: 6px 0; }
-  label { display: block; margin: 8px 0; }
-  @media (prefers-color-scheme: dark) {
-    .danger { background: rgba(90,26,26,0.85); color: #ffb3b3; }
-    .unknown { background: rgba(90,74,0,0.85); color: #ffe08a; }
-    .safe { background: rgba(20,61,31,0.85); color: #a3e6b5; }
-  }
+body{margin:0;background:linear-gradient(160deg,#07080c,#2a1a4a 55%,#1a1040);color:#efe8d8;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:28px 20px 40px}
+.eye{text-align:center;font-size:64px;filter:drop-shadow(0 0 18px rgba(212,175,90,.7))}
+h1{text-align:center;color:#d4af5a;letter-spacing:.35em;margin:8px 0 0;font-family:Georgia,serif}
+.ar-name{text-align:center;color:#d4af5a;font-size:22px;margin:2px 0 18px}
+.langs{text-align:center;margin:14px 0 22px}
+.langs button{background:transparent;border:1px solid #d4af5a;color:#efe8d8;border-radius:999px;padding:7px 14px;margin:3px;cursor:pointer;font-size:15px}
+.langs button.on{background:#d4af5a;color:#07080c}
+.tag{text-align:center;font-size:21px;margin:6px 0}
+.sub{text-align:center;opacity:.85;margin:0 0 24px}
+.card{background:rgba(255,255,255,.08);backdrop-filter:blur(14px);border:1px solid rgba(212,175,90,.35);border-radius:20px;padding:18px;margin:14px 0}
+.card h2{margin:0 0 6px;color:#d4af5a;font-family:Georgia,serif}
+.card p{margin:0 0 12px;opacity:.9}
+a.btn{display:inline-block;border:1px solid #d4af5a;color:#d4af5a;border-radius:999px;padding:9px 20px;text-decoration:none}
+a.btn:hover{background:#d4af5a;color:#07080c}
+h2.sec{color:#d4af5a;font-family:Georgia,serif;margin:28px 0 8px}
+.note{opacity:.85;line-height:1.6}
+.credit{text-align:center;margin-top:30px;opacity:.9}
+.credit .sign{white-space:nowrap}
 </style>
 </head>
 <body>
-<h1>🔍 Forward Checker</h1>
-<p class="sub">Check a forward before you trust it. Nothing leaves your phone. 💜</p>
-
-<section>
-  <h2>1. Check a forward</h2>
-  <p>Paste the forwarded message, caption, or claim here:</p>
-  <textarea id="fwd" placeholder="Paste the forwarded message here..."></textarea>
-  <br>
-  <button id="checkBtn">Check</button>
-  <div id="result"></div>
-  <p class="note">This is a pattern check on your phone, not proof. It errs on the side of caution. Nothing you paste is sent anywhere.</p>
-</section>
-
-<section>
-  <h2>2. Local Mode</h2>
-  <p>Run your phone on a local network with no internet, so remote hackers have no path in.</p>
-  <div class="row">Browser network: <span id="netStatus">Not checked yet</span></div>
-  <div class="row">Internet reachable: <span id="inetStatus">Not tested yet</span></div>
-  <div class="row">GPS: <span id="gpsStatus">Not checked yet</span></div>
-  <div id="badge" class="verdict unknown">NOT TESTED YET</div>
-  <button id="testBtn">Test internet</button>
-  <button id="gpsBtn">Show my position</button>
-  <p class="note">The test contacts one tiny address only to see if the net answers. This page cannot tell if you are on Wi-Fi or mobile data — check that yourself. GPS only receives signals, so it works offline.</p>
-
-  <h2>Go Local — 4 steps</h2>
-  <label><input type="checkbox"> 1. Airplane mode ON (cuts mobile data and calls)</label>
-  <label><input type="checkbox"> 2. Wi-Fi back ON while still in Airplane mode</label>
-  <label><input type="checkbox"> 3. Join a local network with no internet (a router with the internet cable unplugged, or a spare phone hotspot with its mobile data off)</label>
-  <label><input type="checkbox"> 4. Keep GPS ON</label>
-
-  <h2>Offline maps tip</h2>
-  <p>Download maps before you go offline: Google Maps or OsmAnd, both free.</p>
-
-  <h2>Local notes</h2>
-  <textarea id="notes" placeholder="Notes that stay on this phone..."></textarea>
-  <br>
-  <button id="saveNotesBtn">Save on this phone</button>
-  <span id="notesMsg"></span>
-
-  <h2>Honest limits</h2>
-  <ul>
-    <li>This protects against remote hackers only.</li>
-    <li>It does NOT protect against people on the same Wi-Fi.</li>
-    <li>Apps can still send saved data when internet returns — do not turn internet back on while sensitive apps are open.</li>
-    <li>A nearby radio attacker is a different problem from an internet hack.</li>
-  </ul>
-</section>
-
+<div class="wrap">
+<div class="eye">🧿</div>
+<h1>Satar</h1>
+<div class="ar-name">ستار</div>
+<div class="langs">
+<button data-lang="ru">Русский</button>
+<button data-lang="ar">العربية</button>
+<button data-lang="en" class="on">English</button>
+<button data-lang="zh">中文</button>
+</div>
+<p class="tag" data-i="tag">Check a forward before you trust it.</p>
+<p class="sub" data-i="sub">On your phone. Off the net. Privacy in your hand.</p>
+<h2 class="sec" data-i="choose">Choose your edition</h2>
+<div class="card">
+<h2 data-i="ed_arab">Arab edition</h2>
+<p data-i="ed_arab_d">Prayer times + Adhan.</p>
+<a class="btn" href="v3/index.html" data-i="open">Open</a>
+</div>
+<div class="card">
+<h2 data-i="ed_jewish">Jewish edition</h2>
+<p data-i="ed_jewish_d">Talmud wisdom, no Adhan.</p>
+<a class="btn" href="v3/israel.html" data-i="open">Open</a>
+</div>
+<div class="card">
+<h2 data-i="ed_plain">No-prayer edition</h2>
+<p data-i="ed_plain_d">No prayer content.</p>
+<a class="btn" href="v3/plain.html" data-i="open">Open</a>
+</div>
+<h2 class="sec" data-i="install">On your phone</h2>
+<div class="card">
+<p data-i="iphone">iPhone: Share → Add to Home Screen.</p>
+<p data-i="android">Android: Menu → Install app (or Add to Home Screen).</p>
+<p class="note" data-i="note">No store, no account. Works offline, on your phone. Nothing stored anywhere but your phone.</p>
+</div>
+<div class="credit">Made by Wyndham Heaven and Muse <span class="sign">3️⃣💡5️⃣</span></div>
+</div>
 <script>
-function el(id) { return document.getElementById(id); }
-
-function showVerdict(box, kind, title, reason, action) {
-  box.className = 'verdict ' + kind;
-  box.innerHTML = '<div>' + title + '</div>' +
-    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;">' + reason + '</div>' +
-    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;"><b>What to do:</b> ' + action + '</div>';
+var I18N={
+en:{tag:"Check a forward before you trust it.",sub:"On your phone. Off the net. Privacy in your hand.",choose:"Choose your edition",ed_arab:"Arab edition",ed_arab_d:"Prayer times + Adhan.",ed_jewish:"Jewish edition",ed_jewish_d:"Talmud wisdom, no Adhan.",ed_plain:"No-prayer edition",ed_plain_d:"No prayer content.",open:"Open",install:"On your phone",iphone:"iPhone: Share → Add to Home Screen.",android:"Android: Menu → Install app (or Add to Home Screen).",note:"No store, no account. Works offline, on your phone. Nothing stored anywhere but your phone."},
+ru:{tag:"Проверьте пересланное сообщение, прежде чем доверять ему.",sub:"На вашем телефоне. Вне сети. Конфиденциальность в ваших руках.",choose:"Выберите версию",ed_arab:"Арабская версия",ed_arab_d:"Время молитв + азан.",ed_jewish:"Еврейская версия",ed_jewish_d:"Мудрость Талмуда, без азана.",ed_plain:"Версия без молитв",ed_plain_d:"Без молитвенного содержания.",open:"Открыть",install:"На вашем телефоне",iphone:"iPhone: Поделиться → На экран «Домой».",android:"Android: Меню → Установить приложение (или На главный экран).",note:"Без магазина, без учётной записи. Работает офлайн, на вашем телефоне. Ничего не хранится, кроме вашего телефона."},
+ar:{tag:"تحقق من الرسالة المُعاد توجيهها قبل أن تثق بها.",sub:"على هاتفك. بعيدًا عن الإنترنت. خصوصيتك بين يديك.",choose:"اختر نسختك",ed_arab:"النسخة العربية",ed_arab_d:"مواقيت الصلاة + الأذان.",ed_jewish:"النسخة اليهودية",ed_jewish_d:"حكمة التلمود، بدون أذان.",ed_plain:"نسخة بدون صلاة",ed_plain_d:"بدون أي محتوى صلاة.",open:"فتح",install:"على هاتفك",iphone:"آيفون: مشاركة ← إضافة إلى الشاشة الرئيسية.",android:"أندرويد: القائمة ← تثبيت التطبيق (أو إضافة إلى الشاشة الرئيسية).",note:"بدون متجر، بدون حساب. يعمل دون اتصال، على هاتفك. لا يُحفظ شيء إلا على هاتفك."},
+zh:{tag:"在相信之前，先检查转发的信息。",sub:"在你的手机上。脱离网络。隐私掌握在自己手中。",choose:"选择你的版本",ed_arab:"阿拉伯语版",ed_arab_d:"礼拜时间 + 宣礼。",ed_jewish:"犹太版",ed_jewish_d:"塔木德智慧，无宣礼。",ed_plain:"无祈祷版",ed_plain_d:"无祈祷内容。",open:"打开",install:"在你的手机上",iphone:"iPhone：分享 → 添加到主屏幕。",android:"安卓：菜单 → 安装应用（或添加到主屏幕）。",note:"无需商店，无需账号。离线运行，在你的手机上。除了你的手机，不在任何地方存储。"}
+};
+function setLang(l){
+document.documentElement.lang=l;
+document.documentElement.dir=(l==="ar")?"rtl":"ltr";
+var d=I18N[l]||I18N.en;
+var els=document.querySelectorAll("[data-i]");
+for(var i=0;i<els.length;i++){var k=els[i].getAttribute("data-i");if(d[k])els[i].textContent=d[k];}
+var bs=document.querySelectorAll(".langs button");
+for(var j=0;j<bs.length;j++){bs[j].className=(bs[j].getAttribute("data-lang")===l)?"on":"";}
 }
-
-function checkForward() {
-  var box = el('result');
-  var text = el('fwd').value || '';
-  var t = text.toLowerCase();
-  if (!text.trim()) {
-    showVerdict(box, 'unknown', 'PASTE FIRST', 'Nothing pasted yet.', 'Paste the forwarded message above, then tap Check.');
-    return;
-  }
-  var hasCode = /code|otp|password|passcode/.test(t);
-  var asksSend = /send|share|give|tell me/.test(t);
-  var hasLink = /https?:\/\/|www\./.test(t);
-  var urgent = /urgent|act now|immediately|account (locked|suspended|closed)|verify (now|immediately)|limited time|last chance/.test(t);
-  var money = /send money|pay now|you (won|win)|prize|lottery|investment|double your money|bank account/.test(t);
-  if (hasCode && asksSend) {
-    showVerdict(box, 'danger', 'DANGEROUS', 'It asks for a code or password.', 'Never send a code to anyone, ever. Delete it.');
-  } else if (hasLink && urgent) {
-    showVerdict(box, 'danger', 'DANGEROUS', 'A link plus urgency is the classic trap.', 'Do not tap the link. Check with the sender on a different channel first.');
-  } else if (money) {
-    showVerdict(box, 'danger', 'DANGEROUS', 'It promises money or a prize, or asks for payment.', 'Do not pay, do not tap. Ask the sender directly.');
-  } else if (hasLink || /tap|click|download|forward this|share this/.test(t)) {
-    showVerdict(box, 'unknown', 'UNKNOWN', 'It has a link or asks you to act, and I cannot verify it offline.', 'Do not tap yet. Check with the sender on a different channel first.');
-  } else {
-    showVerdict(box, 'safe', 'SAFE', 'No link, no request, no claim found. No trap patterns here.', 'Still: if it later asks you to do something, check first.');
-  }
-}
-
-function setBadge(kind, text) {
-  var b = el('badge');
-  b.className = 'verdict ' + kind;
-  b.textContent = text;
-}
-
-function testInternet() {
-  try {
-    el('netStatus').textContent = navigator.onLine ? 'Browser says: online' : 'Browser says: offline (but this alone is not trusted)';
-  } catch (e) {
-    el('netStatus').textContent = 'Browser network status unavailable.';
-  }
-  el('inetStatus').textContent = 'Testing...';
-  var done = false;
-  function finish(ok) {
-    if (done) return;
-    done = true;
-    if (ok) {
-      el('inetStatus').textContent = 'Reachable — internet can reach in.';
-      setBadge('danger', 'EXPOSED');
-    } else {
-      el('inetStatus').textContent = 'Not reachable — no internet path in.';
-      setBadge('safe', 'SAFE');
-    }
-  }
-  try {
-    var ctrl = new AbortController();
-    var timer = setTimeout(function () { try { ctrl.abort(); } catch (e) {} finish(false); }, 3000);
-    fetch('https://example.com/', { mode: 'no-cors', signal: ctrl.signal })
-      .then(function () { clearTimeout(timer); finish(true); })
-      .catch(function () { clearTimeout(timer); finish(false); });
-  } catch (e) {
-    finish(false);
-  }
-}
-
-function showGPS() {
-  try {
-    if (!navigator.geolocation) {
-      el('gpsStatus').textContent = 'GPS is not available here. Open this page over https for GPS.';
-      return;
-    }
-    el('gpsStatus').textContent = 'Waiting for GPS...';
-    navigator.geolocation.getCurrentPosition(
-      function (pos) {
-        el('gpsStatus').textContent = 'Latitude ' + pos.coords.latitude.toFixed(5) +
-          ', longitude ' + pos.coords.longitude.toFixed(5) +
-          ' (accuracy about ' + Math.round(pos.coords.accuracy) + ' meters).';
-      },
-      function () {
-        el('gpsStatus').textContent = 'GPS needs permission. It only receives signals, so it works offline.';
-      },
-      { timeout: 10000 }
-    );
-  } catch (e) {
-    el('gpsStatus').textContent = 'GPS check failed. It only receives signals, so it works offline.';
-  }
-}
-
-function loadNotes() {
-  try {
-    var saved = localStorage.getItem('fc-notes');
-    if (saved) el('notes').value = saved;
-  } catch (e) {}
-}
-
-function saveNotes() {
-  try {
-    localStorage.setItem('fc-notes', el('notes').value || '');
-    el('notesMsg').textContent = 'Saved on this phone.';
-  } catch (e) {
-    el('notesMsg').textContent = 'Could not save on this phone (storage blocked).';
-  }
-}
-
-el('checkBtn').addEventListener('click', checkForward);
-el('testBtn').addEventListener('click', testInternet);
-el('gpsBtn').addEventListener('click', showGPS);
-el('saveNotesBtn').addEventListener('click', saveNotes);
-loadNotes();
+var lbs=document.querySelectorAll(".langs button");
+for(var k=0;k<lbs.length;k++){lbs[k].addEventListener("click",function(){setLang(this.getAttribute("data-lang"));});}
 </script>
 </body>
 </html>
