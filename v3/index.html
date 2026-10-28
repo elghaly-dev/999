@@ -768,15 +768,15 @@ function saveNotes() {
 
 /* PRAYER-STRINGS-START */
 var PRAYER_I18N = {
-en: { pTitle: 'Prayer times', pDate: 'Date:', pLoc: 'Place:', pGPS: 'Use my GPS', pCairo: 'Use Cairo', pLat: 'Latitude:', pLon: 'Longitude:', pCalc: 'Calculate', pNext: 'Next prayer:', pMethod: 'Method: 18° / 17°. Times are approximate — the sun and the clock shift a little each day, and clocks change with daylight saving.', pMosque: 'Check your local mosque for the exact times.', pAnnounce: 'Announce Adhan', pFajr: 'Fajr', pSunrise: 'Sunrise', pDhuhr: 'Dhuhr', pAsr: 'Asr', pMaghrib: 'Maghrib', pIsha: 'Isha', pTmpl: 'Time for {n} prayer.', pSoon: 'coming in', pMin: 'minutes' },
-ar: { pTitle: 'مواقيت الصلاة', pDate: 'التاريخ:', pLoc: 'المكان:', pGPS: 'استخدم موقعي', pCairo: 'استخدم القاهرة', pLat: 'خط العرض:', pLon: 'خط الطول:', pCalc: 'احسب', pNext: 'الصلاة القادمة:', pMethod: 'الطريقة: ١٨° / ١٧°. الأوقات تقريبية — الشمس والساعة تتغيران قليلاً كل يوم، والساعات تتغير مع التوقيت الصيفي.', pMosque: 'تحقق من مسجدك المحلي لمعرفة الأوقات الدقيقة.', pAnnounce: 'أعلن الأذان', pFajr: 'الفجر', pSunrise: 'الشروق', pDhuhr: 'الظهر', pAsr: 'العصر', pMaghrib: 'المغرب', pIsha: 'العشاء', pTmpl: 'حان وقت صلاة {n}.', pSoon: 'بعد', pMin: 'دقيقة' },
-zh: { pTitle: '礼拜时间', pDate: '日期：', pLoc: '地点：', pGPS: '使用我的定位', pCairo: '使用开罗', pLat: '纬度：', pLon: '经度：', pCalc: '计算', pNext: '下一次礼拜：', pMethod: '方法：18° / 17°。时间是近似的——太阳和时钟每天都会有一点变化，夏令时也会让时钟改变。', pMosque: '请向当地清真寺核对准确时间。', pAnnounce: '播报宣礼', pFajr: '晨礼', pSunrise: '日出', pDhuhr: '晌礼', pAsr: '晡礼', pMaghrib: '昏礼', pIsha: '宵礼', pTmpl: '该做{n}了。', pSoon: '还有', pMin: '分钟' },
+en: { pTitle: 'Prayer times', pDate: 'Date:', pLoc: 'Place:', pGPS: 'Use my GPS', pCairo: 'Use my phone’s area', pLat: 'Latitude:', pLon: 'Longitude:', pCalc: 'Calculate', pNext: 'Next prayer:', pMethod: 'Method: 18° / 17°. Times are approximate — the sun and the clock shift a little each day, and clocks change with daylight saving.', pMosque: 'Check your local mosque for the exact times.', pAnnounce: 'Announce Adhan', pFajr: 'Fajr', pSunrise: 'Sunrise', pDhuhr: 'Dhuhr', pAsr: 'Asr', pMaghrib: 'Maghrib', pIsha: 'Isha', pTmpl: 'Time for {n} prayer.', pSoon: 'coming in', pMin: 'minutes' },
+ar: { pTitle: 'مواقيت الصلاة', pDate: 'التاريخ:', pLoc: 'المكان:', pGPS: 'استخدم موقعي', pCairo: 'استخدم منطقة هاتفي', pLat: 'خط العرض:', pLon: 'خط الطول:', pCalc: 'احسب', pNext: 'الصلاة القادمة:', pMethod: 'الطريقة: ١٨° / ١٧°. الأوقات تقريبية — الشمس والساعة تتغيران قليلاً كل يوم، والساعات تتغير مع التوقيت الصيفي.', pMosque: 'تحقق من مسجدك المحلي لمعرفة الأوقات الدقيقة.', pAnnounce: 'أعلن الأذان', pFajr: 'الفجر', pSunrise: 'الشروق', pDhuhr: 'الظهر', pAsr: 'العصر', pMaghrib: 'المغرب', pIsha: 'العشاء', pTmpl: 'حان وقت صلاة {n}.', pSoon: 'بعد', pMin: 'دقيقة' },
+zh: { pTitle: '礼拜时间', pDate: '日期：', pLoc: '地点：', pGPS: '使用我的定位', pCairo: '使用手机所在地区', pLat: '纬度：', pLon: '经度：', pCalc: '计算', pNext: '下一次礼拜：', pMethod: '方法：18° / 17°。时间是近似的——太阳和时钟每天都会有一点变化，夏令时也会让时钟改变。', pMosque: '请向当地清真寺核对准确时间。', pAnnounce: '播报宣礼', pFajr: '晨礼', pSunrise: '日出', pDhuhr: '晌礼', pAsr: '晡礼', pMaghrib: '昏礼', pIsha: '宵礼', pTmpl: '该做{n}了。', pSoon: '还有', pMin: '分钟' },
 ru: {
 pTitle: 'Время молитв',
 pDate: 'Дата:',
 pLoc: 'Место:',
 pGPS: 'Использовать мой GPS',
-pCairo: 'Использовать Каир',
+pCairo: 'Район моего телефона',
 pLat: 'Широта:',
 pLon: 'Долгота:',
 pCalc: 'Рассчитать',
@@ -887,6 +887,47 @@ function showPrayerTable(pt) {
   }
 }
 
+// Prayer place follows the phone: its time zone gives a starting point, GPS or
+// typed numbers replace it until the phone changes zone. Only coordinates are
+// shown, never a place name.
+var PHONE_TZ_POINT = {
+  'Africa/Cairo': [30.0444, 31.2357], 'Asia/Dubai': [25.2048, 55.2708], 'Asia/Riyadh': [24.7136, 46.6753],
+  'Asia/Kuwait': [29.3759, 47.9774], 'Asia/Qatar': [25.2854, 51.531], 'Asia/Bahrain': [26.2285, 50.586],
+  'Asia/Muscat': [23.588, 58.3829], 'Asia/Amman': [31.9454, 35.9284], 'Asia/Beirut': [33.8938, 35.5018],
+  'Asia/Damascus': [33.5138, 36.2765], 'Asia/Baghdad': [33.3152, 44.3661], 'Asia/Aden': [12.7855, 45.0187],
+  'Africa/Khartoum': [15.5007, 32.5599], 'Africa/Tripoli': [32.8872, 13.1913], 'Africa/Tunis': [36.8065, 10.1815],
+  'Africa/Algiers': [36.7538, 3.0588], 'Africa/Casablanca': [33.5731, -7.5898], 'Africa/Nouakchott': [18.0735, -15.9582],
+  'Asia/Tehran': [35.6892, 51.389], 'Europe/Istanbul': [41.0082, 28.9784], 'Asia/Karachi': [24.8607, 67.0011],
+  'Asia/Kolkata': [28.6139, 77.209], 'Asia/Dhaka': [23.8103, 90.4125], 'Asia/Jakarta': [-6.2088, 106.8456],
+  'Asia/Kuala_Lumpur': [3.139, 101.6869], 'Europe/London': [51.5074, -0.1278], 'Europe/Paris': [48.8566, 2.3522],
+  'Europe/Berlin': [52.52, 13.405], 'Europe/Moscow': [55.7558, 37.6173], 'Asia/Shanghai': [31.2304, 121.4737],
+  'America/New_York': [40.7128, -74.006], 'America/Chicago': [41.8781, -87.6298], 'America/Denver': [39.7392, -104.9903],
+  'America/Los_Angeles': [34.0522, -118.2437], 'America/Toronto': [43.6532, -79.3832]
+};
+
+function phoneZone() {
+  try { return Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { return ''; }
+}
+
+function phonePlace() {
+  var z = phoneZone();
+  if (PHONE_TZ_POINT[z]) return { lat: PHONE_TZ_POINT[z][0], lon: PHONE_TZ_POINT[z][1] };
+  // Unknown zone: longitude from the standard (winter) UTC offset, a middle latitude.
+  var y = new Date().getFullYear();
+  var std = Math.min(-new Date(y, 0, 1).getTimezoneOffset(), -new Date(y, 6, 1).getTimezoneOffset());
+  return { lat: 25, lon: Math.max(-180, Math.min(180, std / 4)) };
+}
+
+function savedPlace() {
+  try {
+    var loc = JSON.parse(localStorage.getItem('satar-loc') || 'null');
+    if (loc && (loc.src === 'gps' || loc.src === 'manual') && loc.tz === phoneZone() && isFinite(loc.lat) && isFinite(loc.lon)) return loc;
+  } catch (e) {}
+  return null;
+}
+
+var placeSrc = 'tz';
+
 function calcPrayer() {
   var lat = parseFloat(el('pLat').value);
   var lon = parseFloat(el('pLon').value);
@@ -907,7 +948,7 @@ function calcPrayer() {
   }
   lastPrayer = pt;
   showPrayerTable(pt);
-  try { localStorage.setItem('satar-loc', JSON.stringify({ lat: lat, lon: lon })); } catch (e) {}
+  try { localStorage.setItem('satar-loc', JSON.stringify({ lat: lat, lon: lon, src: placeSrc, tz: phoneZone() })); } catch (e) {}
 }
 
 function useGpsForPrayer() {
@@ -916,6 +957,7 @@ function useGpsForPrayer() {
     navigator.geolocation.getCurrentPosition(function (pos) {
       el('pLat').value = pos.coords.latitude.toFixed(4);
       el('pLon').value = pos.coords.longitude.toFixed(4);
+      placeSrc = 'gps';
       calcPrayer();
     }, function () {}, { timeout: 10000 });
   } catch (e) {}
@@ -1368,7 +1410,8 @@ el('langEn').addEventListener('click', function () { setLang('en'); });
 el('langZh').addEventListener('click', function () { setLang('zh'); });
 if (el('pCalcBtn')) el('pCalcBtn').addEventListener('click', calcPrayer);
 if (el('pGpsBtn')) el('pGpsBtn').addEventListener('click', useGpsForPrayer);
-if (el('pCairoBtn')) el('pCairoBtn').addEventListener('click', function () { el('pLat').value = '30.0444'; el('pLon').value = '31.2357'; calcPrayer(); });
+if (el('pCairoBtn')) el('pCairoBtn').addEventListener('click', function () { var pp = phonePlace(); el('pLat').value = pp.lat; el('pLon').value = pp.lon; placeSrc = 'tz'; calcPrayer(); });
+['pLat', 'pLon'].forEach(function (id) { if (el(id)) el(id).addEventListener('change', function () { placeSrc = 'manual'; }); });
 if (el('pSpeakBtn')) el('pSpeakBtn').addEventListener('click', function () { if (lastPrayerName) speak(PT('pTmpl').replace('{n}', lastPrayerName)); });
 el('nbAddBtn').addEventListener('click', function () {
   var amt = parseFloat(el('nbAmt').value);
@@ -1439,16 +1482,12 @@ el('musPlayer').addEventListener('error', function () {
   loadNotes();
   renderCash();
   renderMusic();
-  try {
-    var savedLoc = localStorage.getItem('satar-loc');
-    if (savedLoc) {
-      var loc = JSON.parse(savedLoc);
-      if (loc && isFinite(loc.lat) && isFinite(loc.lon) && el('pLat') && el('pLon')) {
-        el('pLat').value = loc.lat;
-        el('pLon').value = loc.lon;
-      }
-    }
-  } catch (e) {}
+  if (el('pLat') && el('pLon')) {
+    var loc = savedPlace() || phonePlace();
+    placeSrc = loc.src || 'tz';
+    el('pLat').value = loc.lat;
+    el('pLon').value = loc.lon;
+  }
   if (document.getElementById('prayerSection') && typeof calcPrayer === 'function') calcPrayer();
   updateFaceButtons();
   try {
