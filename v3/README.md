@@ -97,7 +97,7 @@ net answers — it sends nothing.
 - Free web app, made with 💜, not for money.
 - No nationality tiers, no paywall, no geo tiers.
 - No crypto payment, no keys, no real money movement.
-- Nothing stored, nothing tracked, nothing sent anywhere by the app.
+- Nothing stored anywhere but your phone, nothing tracked, nothing sent anywhere by the app.
 - Russian, Arabic, English, and Chinese. Plain words.
 - Simple: elegant ideas come from simple.
 - Try before saying can't. Step by step.

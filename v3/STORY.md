@@ -23,17 +23,14 @@ Credit line in the app, exact: "Made by Wyndham Heaven and Muse 3️⃣💡5️�
 
 ## Where
 
-v1 and v2 sit in the private repo elghaly-dev/999, main branch, under
-the name 999. v3 is built locally and joins them when it is pushed. The
-app itself is called Satar, and that name does not change.
+v1, v2 and v3 sit in the private repo elghaly-dev/999, main branch, under the name 999 (v3 in the v3/ folder, pushed 28 October 2026). The app itself is called Satar, and that name does not change.
 
 ## What it is for
 
 A free web app for his people, made with 💜, not for money. It checks a
 forward on the phone before anyone trusts it, so people who get hacked too
 much have one simple habit that stops most of it. No nationality tiers.
-No paywall. Nothing stored, nothing tracked, nothing sent anywhere by
-the app.
+No paywall. Nothing stored anywhere but your phone, nothing tracked, nothing sent anywhere by the app.
 
 ## The hand that made it
 
