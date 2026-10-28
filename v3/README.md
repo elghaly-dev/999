@@ -6,12 +6,9 @@ Check a forward before you trust it. By Wyndham Heaven (elghaly).
 
 Someone forwards a message, photo, or claim. Their own phone checks it —
 instantly, no internet, no waiting, nothing sent anywhere. They get a plain
-answer: true, false, or unknown — and safe, dangerous, or unknown — with one
-short reason and what to do. Nothing more.
-
-When brothers are near each other, their phones can also share warnings over
-a local network — Bluetooth and Wi-Fi Direct, no internet. Sharing is
-extra — the check never waits for it.
+answer: dangerous, unknown, or no warning signs found — with one short
+reason, the words that raised a warning, and what to do. It is a pattern
+check, so it never says a message is true or false.
 
 ## Editions
 
@@ -33,11 +30,13 @@ Russian, English, and Chinese read left-to-right.
 Every edition is one file, no libraries, no accounts, no tracking. Open
 it in a browser. Every edition has:
 
-  - Check a forward: paste a message, get safe / dangerous / unknown,
-    one reason, and what to do. In Russian, Arabic, English, or Chinese.
-    All on the phone, nothing sent anywhere.
+  - Check a forward: paste a message, get dangerous / unknown / no
+    warning signs found, one reason, the words that raised it, and what
+    to do. In Russian, Arabic, English, or Chinese. All on the phone,
+    nothing sent anywhere.
   - Voice: hear verdicts spoken by the phone itself (speechSynthesis).
-  - Local Mode: test if internet is really reachable, show GPS position,
+  - Local Mode: ask the phone whether it has a network (no address is
+    contacted), show GPS position,
     and a 4-step Go Local guide (Airplane mode on, Wi-Fi on, join a
     no-internet network, keep GPS on). Local notes that stay on the
     phone.
@@ -50,6 +49,9 @@ it in a browser. Every edition has:
   - Recovery: export a backup file and import it back. The app itself
     never sends anything — the user sends the file with their own mail
     or SMS app, by hand.
+  - My music: add songs that are already on the phone. They are kept
+    inside the app on that phone (IndexedDB) and play with no internet.
+    Nothing is downloaded. Songs are not in the backup file.
   - Honest limits card.
 
 Only the Arab edition (`index.html`) has:
@@ -66,9 +68,18 @@ Only the Jewish edition (`israel.html`, draft) has:
 
 Open any edition in a browser. Everything works from the file itself,
 except: GPS needs https hosting for permission, and Face ID needs https
-hosting plus a device with Face ID. The internet-reachability test only
-runs when you tap it, and it contacts one tiny address only to see if the
-net answers — it sends nothing.
+hosting plus a device with Face ID. The network check asks the phone only
+and contacts no address.
+
+## Offline and install
+
+After the first visit over https, the service worker (`../sw.js`) keeps the
+landing page and the public editions on the phone, so they open with no
+internet. It only reads files from the same site. Each public edition has a
+manifest (`arab.webmanifest`, `plain.webmanifest`, `christian.webmanifest`)
+and the icons in `../icons/`, so the phone can add Satar to the Home Screen
+and open that edition directly. When the files change, bump `CACHE` in
+`../sw.js`.
 
 ## Other files
 
@@ -91,6 +102,16 @@ net answers — it sends nothing.
 - Recovery needs the user: the app makes the backup file, the user sends
   it with their own mail or SMS app. Mail and SMS apps cannot take a file
   from a link, so the file must be attached by hand.
+- My music: songs stay on that one phone and are not in the backup. On
+  iPhone, music may stop when the screen locks. An app added to the iPhone
+  Home Screen keeps its own storage, separate from Safari.
+
+## Planned
+
+- Share a warning as text or a QR code, by hand, phone to phone. Not built
+  yet.
+- A small built-in music pack of songs that are free to share (public
+  domain or CC0), once the licensed files are chosen. Not built yet.
 
 ## Rules
 
