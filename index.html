@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +14,8 @@ h1{text-align:center;color:#d4af5a;letter-spacing:.35em;margin:8px 0 0;font-fami
 .langs button{background:transparent;border:1px solid #d4af5a;color:#efe8d8;border-radius:999px;padding:7px 14px;margin:3px;cursor:pointer;font-size:15px}
 .langs button.on{background:#d4af5a;color:#07080c}
 .tag{text-align:center;font-size:21px;margin:6px 0}
-.sub{text-align:center;opacity:.85;margin:0 0 24px}
+.sub{text-align:center;opacity:.85;margin:0 0 10px}
+.yours{text-align:center;font-size:19px;color:#d4af5a;margin:0 0 24px}
 .card{background:rgba(255,255,255,.08);backdrop-filter:blur(14px);border:1px solid rgba(212,175,90,.35);border-radius:20px;padding:18px;margin:14px 0}
 .card h2{margin:0 0 6px;color:#d4af5a;font-family:Georgia,serif}
 .card p{margin:0 0 12px;opacity:.9}
@@ -33,12 +34,13 @@ h2.sec{color:#d4af5a;font-family:Georgia,serif;margin:28px 0 8px}
 <div class="ar-name">ستار</div>
 <div class="langs">
 <button data-lang="ru">Русский</button>
-<button data-lang="ar">العربية</button>
-<button data-lang="en" class="on">English</button>
+<button data-lang="ar" class="on">العربية</button>
+<button data-lang="en">English</button>
 <button data-lang="zh">中文</button>
 </div>
 <p class="tag" data-i="tag">Check a forward before you trust it.</p>
 <p class="sub" data-i="sub">On your phone. Off the net. Privacy in your hand.</p>
+<p class="yours" data-i="yours">It's yours, for you — for the people 💜</p>
 <h2 class="sec" data-i="choose">Choose your edition</h2>
 <div class="card">
 <h2 data-i="ed_arab">Arab edition</h2>
@@ -65,10 +67,10 @@ h2.sec{color:#d4af5a;font-family:Georgia,serif;margin:28px 0 8px}
 </div>
 <script>
 var I18N={
-en:{tag:"Check a forward before you trust it.",sub:"On your phone. Off the net. Privacy in your hand.",choose:"Choose your edition",ed_arab:"Arab edition",ed_arab_d:"Prayer times + Adhan.",ed_jewish:"Jewish edition",ed_jewish_d:"Talmud wisdom, no Adhan.",ed_plain:"No-prayer edition",ed_plain_d:"No prayer content.",open:"Open",install:"On your phone",iphone:"iPhone: Share → Add to Home Screen.",android:"Android: Menu → Install app (or Add to Home Screen).",note:"No store, no account. Works offline, on your phone. Nothing stored anywhere but your phone."},
-ru:{tag:"Проверьте пересланное сообщение, прежде чем доверять ему.",sub:"На вашем телефоне. Вне сети. Конфиденциальность в ваших руках.",choose:"Выберите версию",ed_arab:"Арабская версия",ed_arab_d:"Время молитв + азан.",ed_jewish:"Еврейская версия",ed_jewish_d:"Мудрость Талмуда, без азана.",ed_plain:"Версия без молитв",ed_plain_d:"Без молитвенного содержания.",open:"Открыть",install:"На вашем телефоне",iphone:"iPhone: Поделиться → На экран «Домой».",android:"Android: Меню → Установить приложение (или На главный экран).",note:"Без магазина, без учётной записи. Работает офлайн, на вашем телефоне. Ничего не хранится, кроме вашего телефона."},
-ar:{tag:"تحقق من الرسالة المُعاد توجيهها قبل أن تثق بها.",sub:"على هاتفك. بعيدًا عن الإنترنت. خصوصيتك بين يديك.",choose:"اختر نسختك",ed_arab:"النسخة العربية",ed_arab_d:"مواقيت الصلاة + الأذان.",ed_jewish:"النسخة اليهودية",ed_jewish_d:"حكمة التلمود، بدون أذان.",ed_plain:"نسخة بدون صلاة",ed_plain_d:"بدون أي محتوى صلاة.",open:"فتح",install:"على هاتفك",iphone:"آيفون: مشاركة ← إضافة إلى الشاشة الرئيسية.",android:"أندرويد: القائمة ← تثبيت التطبيق (أو إضافة إلى الشاشة الرئيسية).",note:"بدون متجر، بدون حساب. يعمل دون اتصال، على هاتفك. لا يُحفظ شيء إلا على هاتفك."},
-zh:{tag:"在相信之前，先检查转发的信息。",sub:"在你的手机上。脱离网络。隐私掌握在自己手中。",choose:"选择你的版本",ed_arab:"阿拉伯语版",ed_arab_d:"礼拜时间 + 宣礼。",ed_jewish:"犹太版",ed_jewish_d:"塔木德智慧，无宣礼。",ed_plain:"无祈祷版",ed_plain_d:"无祈祷内容。",open:"打开",install:"在你的手机上",iphone:"iPhone：分享 → 添加到主屏幕。",android:"安卓：菜单 → 安装应用（或添加到主屏幕）。",note:"无需商店，无需账号。离线运行，在你的手机上。除了你的手机，不在任何地方存储。"}
+en:{tag:"Check a forward before you trust it.",sub:"On your phone. Off the net. Privacy in your hand.",yours:"It's yours, for you — for the people 💜",choose:"Choose your edition",ed_arab:"Arab edition",ed_arab_d:"Prayer times + Adhan.",ed_jewish:"Jewish edition",ed_jewish_d:"Talmud wisdom, no Adhan.",ed_plain:"No-prayer edition",ed_plain_d:"No prayer content.",open:"Open",install:"On your phone",iphone:"iPhone: Share → Add to Home Screen.",android:"Android: Menu → Install app (or Add to Home Screen).",note:"No store, no account. Works offline, on your phone. Nothing stored anywhere but your phone."},
+ru:{tag:"Проверьте пересланное сообщение, прежде чем доверять ему.",sub:"На вашем телефоне. Вне сети. Конфиденциальность в ваших руках.",yours:"Это ваше, для вас — для людей 💜",choose:"Выберите версию",ed_arab:"Арабская версия",ed_arab_d:"Время молитв + азан.",ed_jewish:"Еврейская версия",ed_jewish_d:"Мудрость Талмуда, без азана.",ed_plain:"Версия без молитв",ed_plain_d:"Без молитвенного содержания.",open:"Открыть",install:"На вашем телефоне",iphone:"iPhone: Поделиться → На экран «Домой».",android:"Android: Меню → Установить приложение (или На главный экран).",note:"Без магазина, без учётной записи. Работает офлайн, на вашем телефоне. Ничего не хранится, кроме вашего телефона."},
+ar:{tag:"تحقق من الرسالة المُعاد توجيهها قبل أن تثق بها.",sub:"على هاتفك. بعيدًا عن الإنترنت. خصوصيتك بين يديك.",yours:"إنه لكم، من أجلكم — للناس 💜",choose:"اختر نسختك",ed_arab:"النسخة العربية",ed_arab_d:"مواقيت الصلاة + الأذان.",ed_jewish:"النسخة اليهودية",ed_jewish_d:"حكمة التلمود، بدون أذان.",ed_plain:"نسخة بدون صلاة",ed_plain_d:"بدون أي محتوى صلاة.",open:"فتح",install:"على هاتفك",iphone:"آيفون: مشاركة ← إضافة إلى الشاشة الرئيسية.",android:"أندرويد: القائمة ← تثبيت التطبيق (أو إضافة إلى الشاشة الرئيسية).",note:"بدون متجر، بدون حساب. يعمل دون اتصال، على هاتفك. لا يُحفظ شيء إلا على هاتفك."},
+zh:{tag:"在相信之前，先检查转发的信息。",sub:"在你的手机上。脱离网络。隐私掌握在自己手中。",yours:"它是你们的，为你们 — 为了人们 💜",choose:"选择你的版本",ed_arab:"阿拉伯语版",ed_arab_d:"礼拜时间 + 宣礼。",ed_jewish:"犹太版",ed_jewish_d:"塔木德智慧，无宣礼。",ed_plain:"无祈祷版",ed_plain_d:"无祈祷内容。",open:"打开",install:"在你的手机上",iphone:"iPhone：分享 → 添加到主屏幕。",android:"安卓：菜单 → 安装应用（或添加到主屏幕）。",note:"无需商店，无需账号。离线运行，在你的手机上。除了你的手机，不在任何地方存储。"}
 };
 function setLang(l){
 document.documentElement.lang=l;
@@ -81,6 +83,7 @@ for(var j=0;j<bs.length;j++){bs[j].className=(bs[j].getAttribute("data-lang")===
 }
 var lbs=document.querySelectorAll(".langs button");
 for(var k=0;k<lbs.length;k++){lbs[k].addEventListener("click",function(){setLang(this.getAttribute("data-lang"));});}
+setLang('ar');
 </script>
 </body>
 </html>
