@@ -286,7 +286,7 @@ en: {
   cLat: 'Latitude:',
   cLon: 'Longitude:',
   cGPS: 'Use my GPS',
-  cCairo: 'Use Cairo',
+  cCairo: 'Use my phone’s area',
   cCalc: 'Calculate',
   cBakr: 'Morning',
   cThird: 'Third',
@@ -358,7 +358,7 @@ ar: {
   cLat: 'خط العرض:',
   cLon: 'خط الطول:',
   cGPS: 'استخدم موقعي',
-  cCairo: 'استخدم القاهرة',
+  cCairo: 'استخدم منطقة هاتفي',
   cCalc: 'احسب',
   cBakr: 'باكر',
   cThird: 'الثالثة',
@@ -430,7 +430,7 @@ zh: {
   cLat: '纬度：',
   cLon: '经度：',
   cGPS: '使用我的定位',
-  cCairo: '使用开罗',
+  cCairo: '使用手机所在地区',
   cCalc: '计算',
   cBakr: '晨祷',
   cThird: '第三时',
@@ -502,7 +502,7 @@ ru: {
   cLat: 'Широта:',
   cLon: 'Долгота:',
   cGPS: 'Использовать мой GPS',
-  cCairo: 'Использовать Каир',
+  cCairo: 'Район моего телефона',
   cCalc: 'Рассчитать',
   cBakr: 'Утреня',
   cThird: 'Третий час',
@@ -1377,6 +1377,46 @@ el('musPlayer').addEventListener('error', function () {
     if (lockIsSet() && !sessionStorage.getItem('satar-unlocked')) showLockOverlay();
   } catch (e) {}
 /* CHRISTIAN-JS-START */
+// Prayer place follows the phone: its time zone gives a starting point, GPS or
+// typed numbers replace it until the phone changes zone. Only coordinates are
+// shown, never a place name.
+var PHONE_TZ_POINT = {
+  'Africa/Cairo': [30.0444, 31.2357], 'Asia/Dubai': [25.2048, 55.2708], 'Asia/Riyadh': [24.7136, 46.6753],
+  'Asia/Kuwait': [29.3759, 47.9774], 'Asia/Qatar': [25.2854, 51.531], 'Asia/Bahrain': [26.2285, 50.586],
+  'Asia/Muscat': [23.588, 58.3829], 'Asia/Amman': [31.9454, 35.9284], 'Asia/Beirut': [33.8938, 35.5018],
+  'Asia/Damascus': [33.5138, 36.2765], 'Asia/Baghdad': [33.3152, 44.3661], 'Asia/Aden': [12.7855, 45.0187],
+  'Africa/Khartoum': [15.5007, 32.5599], 'Africa/Tripoli': [32.8872, 13.1913], 'Africa/Tunis': [36.8065, 10.1815],
+  'Africa/Algiers': [36.7538, 3.0588], 'Africa/Casablanca': [33.5731, -7.5898], 'Africa/Nouakchott': [18.0735, -15.9582],
+  'Asia/Tehran': [35.6892, 51.389], 'Europe/Istanbul': [41.0082, 28.9784], 'Asia/Karachi': [24.8607, 67.0011],
+  'Asia/Kolkata': [28.6139, 77.209], 'Asia/Dhaka': [23.8103, 90.4125], 'Asia/Jakarta': [-6.2088, 106.8456],
+  'Asia/Kuala_Lumpur': [3.139, 101.6869], 'Europe/London': [51.5074, -0.1278], 'Europe/Paris': [48.8566, 2.3522],
+  'Europe/Berlin': [52.52, 13.405], 'Europe/Moscow': [55.7558, 37.6173], 'Asia/Shanghai': [31.2304, 121.4737],
+  'America/New_York': [40.7128, -74.006], 'America/Chicago': [41.8781, -87.6298], 'America/Denver': [39.7392, -104.9903],
+  'America/Los_Angeles': [34.0522, -118.2437], 'America/Toronto': [43.6532, -79.3832]
+};
+
+function phoneZone() {
+  try { return Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { return ''; }
+}
+
+function phonePlace() {
+  var z = phoneZone();
+  if (PHONE_TZ_POINT[z]) return { lat: PHONE_TZ_POINT[z][0], lon: PHONE_TZ_POINT[z][1] };
+  // Unknown zone: longitude from the standard (winter) UTC offset, a middle latitude.
+  var y = new Date().getFullYear();
+  var std = Math.min(-new Date(y, 0, 1).getTimezoneOffset(), -new Date(y, 6, 1).getTimezoneOffset());
+  return { lat: 25, lon: Math.max(-180, Math.min(180, std / 4)) };
+}
+
+function savedPlace() {
+  try {
+    var loc = JSON.parse(localStorage.getItem('satar-loc') || 'null');
+    if (loc && (loc.src === 'gps' || loc.src === 'manual') && loc.tz === phoneZone() && isFinite(loc.lat) && isFinite(loc.lon)) return loc;
+  } catch (e) {}
+  return null;
+}
+
+var placeSrcC = 'tz';
 function computeSunTimes(dateObj, lat, lon, tzMin) {
   function toRad(d) { return d * Math.PI / 180; }
   function toDeg(r) { return r * 180 / Math.PI; }
@@ -1430,7 +1470,7 @@ function calcChristian() {
   for (var i = 0; i < rows.length; i++) { h += '<tr><td><span data-t="' + rows[i][0] + '"></span></td><td>' + fmtMin(rows[i][1]) + '</td></tr>'; }
   el('cTable').innerHTML = h;
   render();
-  try { localStorage.setItem('satar-loc', JSON.stringify({ lat: lat, lon: lon })); } catch (e) {}
+  try { localStorage.setItem('satar-loc', JSON.stringify({ lat: lat, lon: lon, src: placeSrcC, tz: phoneZone() })); } catch (e) {}
 }
 function useGpsForChristian() {
   try {
@@ -1438,17 +1478,21 @@ function useGpsForChristian() {
     navigator.geolocation.getCurrentPosition(function (pos) {
       el('cLat').value = pos.coords.latitude.toFixed(4);
       el('cLon').value = pos.coords.longitude.toFixed(4);
+      placeSrcC = 'gps';
       calcChristian();
     }, function () {}, { timeout: 10000 });
   } catch (e) {}
 }
 if (el('cGpsBtn')) el('cGpsBtn').addEventListener('click', useGpsForChristian);
-if (el('cCairoBtn')) el('cCairoBtn').addEventListener('click', function () { el('cLat').value = '30.0444'; el('cLon').value = '31.2357'; calcChristian(); });
+if (el('cCairoBtn')) el('cCairoBtn').addEventListener('click', function () { var pp = phonePlace(); el('cLat').value = pp.lat; el('cLon').value = pp.lon; placeSrcC = 'tz'; calcChristian(); });
+['cLat', 'cLon'].forEach(function (id) { if (el(id)) el(id).addEventListener('change', function () { placeSrcC = 'manual'; }); });
 if (el('cCalcBtn')) el('cCalcBtn').addEventListener('click', calcChristian);
-try {
-  var savedC = localStorage.getItem('satar-loc');
-  if (savedC) { var lc = JSON.parse(savedC); if (lc && isFinite(lc.lat) && isFinite(lc.lon)) { el('cLat').value = lc.lat; el('cLon').value = lc.lon; } }
-} catch (e) {}
+if (el('cLat') && el('cLon')) {
+  var lc = savedPlace() || phonePlace();
+  placeSrcC = lc.src || 'tz';
+  el('cLat').value = lc.lat;
+  el('cLon').value = lc.lon;
+}
 try { calcChristian(); } catch (e) {}
 /* CHRISTIAN-JS-END */
 })();
