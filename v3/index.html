@@ -286,6 +286,7 @@ rLinkUrg: 'A link plus urgency is the classic trap.', aLinkUrg: 'Do not tap the 
 rMoney: 'It promises money or a prize, or asks for payment.', aMoney: 'Do not pay, do not tap. Ask the sender directly.',
 rLink: 'It has a link or asks you to act, and I cannot verify it offline.', aLink: 'Do not tap yet. Check with the sender on a different channel first.',
 rSafe: 'No link, no code request, no money or prize found. This does not prove it is true — it only means the usual trap signs are missing.', aSafe: 'Still: if it later asks you to do something, check first.',
+rUrgent: 'It uses urgency or an account threat, and I cannot verify it offline.', aUrgent: 'Do not call numbers or tap anything in it. Check with the real institution on a channel you already trust.',
 localTitle: '2. Local Mode', localIntro: 'Run your phone on a local network with no internet, so remote hackers have no path in.',
 netLabel: 'Browser network:', inetLabel: 'Internet:', gpsLabel: 'GPS:',
 badgeNew: 'NOT TESTED YET', testBtn: 'Check network', gpsBtn: 'Show my position',
@@ -337,6 +338,7 @@ rLinkUrg: 'رابط مع استعجال — هذا هو الفخ المعتاد.
 rMoney: 'يعد بمال أو جائزة، أو يطلب دفعاً.', aMoney: 'لا تدفع ولا تضغط. اسأل المرسل مباشرة.',
 rLink: 'فيه رابط أو يطلب منك فعلاً، ولا أستطيع التحقق منه دون إنترنت.', aLink: 'لا تضغط بعد. تحقق مع المرسل عبر قناة أخرى أولاً.',
 rSafe: 'لم يُعثر على رابط ولا طلب رمز ولا مال أو جائزة. هذا لا يثبت أنها صحيحة — يعني فقط أن علامات الفخ المعتادة غير موجودة.', aSafe: 'مع ذلك: إذا طلب منك لاحقاً فعل شيء، تحقق أولاً.',
+rUrgent: 'فيها استعجال أو تهديد للحساب، ولا أستطيع التحقق منها دون إنترنت.', aUrgent: 'لا تتصل بأرقام فيها ولا تضغط على شيء. تحقق من الجهة الحقيقية عبر قناة تثق بها مسبقاً.',
 localTitle: '٢. الوضع المحلي', localIntro: 'شغّل هاتفك على شبكة محلية بلا إنترنت، حتى لا يجد المخترقون البعيدون طريقاً إليه.',
 netLabel: 'شبكة المتصفح:', inetLabel: 'الإنترنت:', gpsLabel: 'نظام تحديد المواقع:',
 badgeNew: 'لم يتم الاختبار بعد', testBtn: 'افحص الشبكة', gpsBtn: 'أظهر موقعي',
@@ -388,6 +390,7 @@ rLinkUrg: '链接加催促，就是经典陷阱。', aLinkUrg: '不要点链接�
 rMoney: '它承诺金钱或奖品，或要求付款。', aMoney: '不要付款，不要点击。直接问发件人。',
 rLink: '它有链接或要求你行动，而我离线无法核实。', aLink: '先不要点。先通过另一个渠道向发件人核实。',
 rSafe: '没有发现链接、索要验证码、金钱或奖品。这不能证明它是真的——只说明常见的陷阱迹象没有出现。', aSafe: '不过：如果它之后要求你做什么，先核查。',
+rUrgent: '它使用催促或账户威胁，而我离线无法核实。', aUrgent: '不要拨打其中的号码，也不要点任何内容。通过你已经信任的渠道向真实机构核实。',
 localTitle: '2. 本地模式', localIntro: '让你的手机运行在没有互联网的本地网络上，这样远程黑客就没有入口。',
 netLabel: '浏览器网络：', inetLabel: '互联网：', gpsLabel: '定位：',
 badgeNew: '尚未测试', testBtn: '检查网络', gpsBtn: '显示我的位置',
@@ -451,6 +454,8 @@ rLink: 'Здесь есть ссылка или просьба что-то сд�
 aLink: 'Пока не нажимайте. Сначала проверьте у отправителя другим способом.',
 rSafe: 'Не найдено ни ссылки, ни просьбы о коде, ни денег или приза. Это не доказывает, что это правда, — это значит лишь, что обычных признаков ловушки нет.',
 aSafe: 'Всё равно: если позже вас попросят что-то сделать, сначала проверьте.',
+rUrgent: 'Здесь срочность или угроза аккаунту, и я не могу проверить это без интернета.',
+aUrgent: 'Не звоните по номерам из сообщения и ничего не нажимайте. Проверьте в настоящем учреждении тем способом, которому вы уже доверяете.',
 localTitle: '2. Локальный режим',
 localIntro: 'Пусть ваш телефон работает в локальной сети без интернета — тогда у удалённых взломщиков не будет к нему пути.',
 netLabel: 'Сеть браузера:',
@@ -600,10 +605,10 @@ function showVerdict(box, kind, title, reason, action) {
 }
 
 var PATTERNS = {
-  code: [/code|otp|password|passcode/, /كود|رمز|كلمة السر|كلمة المرور/, /验证码|密码|口令/, /[Кк]од|[Пп]арол/],
-  send: [/send|share|give|tell me/, /أرسل|ارسل|شارك|اعط|أعط|اخبر|أخبر/, /发送|分享|告诉|给我/, /[Оо]тправ|[Пп]оделись|[Сс]ообщи|[Пп]ришл/],
-  link: [/https?:\/\/|www\./, /https?:\/\/|www\.|رابط/, /https?:\/\/|www\.|链接|网址/, /https?:\/\/|www\.|[Сс]сылк/],
-  urgent: [/urgent|act now|immediately|account (locked|suspended|closed)|verify (now|immediately)|limited time|last chance/, /عاجل|فورا|فوراً|حسابك (مغلق|موقوف|معلق)|تحقق (الآن|فورا)|وقت محدود|فرصة أخيرة/, /紧急|立即|马上|账户(被锁定|被冻结|已关闭)|立即验证|限时|最后机会/, /[Сс]рочно|[Нн]емедленно|[Сс]ейчас же|аккаунт (заблокирован|заморожен|закрыт)|[Пп]одтверд(и|ите) (сейчас|немедленно)|ограниченное время|последний шанс/],
+  code: [/code|otp|password|passcode|\bpin\b/, /كود|رمز|كلمة السر|كلمة المرور|رمز التحقق/, /验证码|密码|口令|校验码/, /[Кк]од|[Пп]арол/],
+  send: [/send|share|give|tell me|enter (your |the )?(code|otp|password|pin)/, /أرسل|ارسل|شارك|اعط|أعط|اخبر|أخبر|أدخل (الكود|الرمز|رمز التحقق)/, /发送|分享|告诉|给我|输入(验证码|密码)/, /[Оо]тправ|[Пп]оделись|[Сс]ообщи|[Пп]ришл|[Вв]веди(те)? (код|пароль)/],
+  link: [/https?:\/\/|www\./, /(?![^\s]*@)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+(?:com|net|org|xyz|info|top|icu|click|link|live|site|online|shop|app|co|io|biz|cc|tk|ml|ga|cf|gq|ru|cn|me|tv|pw|work|club|vip|pro|dev|tech|store|zip|mov|ly|to|page|web|cloud|cfd)(?:\/[^\s]*)?/i, /https?:\/\/|www\.|رابط/, /https?:\/\/|www\.|链接|网址/, /https?:\/\/|www\.|[Сс]сылк/],
+  urgent: [/urgent|act now|immediately|account(?:\s+\w+){0,4}\s+(?:locked|suspended|closed|blocked)|(?:your\s+)?account\s+has\s+been\s+(?:locked|suspended|closed|blocked)|(?:locked|suspended|closed|blocked)\s+account|verify\s+(?:now|immediately)|limited time|last chance|update (?:your )?(?:details|information|data)/, /عاجل|فورا|فوراً|حسابك (مغلق|موقوف|معلق)|تم إيقاف حسابك|تم ايقاف حسابك|تحقق (الآن|فورا)|وقت محدود|فرصة أخيرة|حدث بياناتك|حدّث بياناتك|حدثي بياناتك/, /紧急|立即|马上|账户(被锁定|被冻结|已关闭|被暂停|已暂停)|立即验证|限时|最后机会|更新(您的)?(资料|信息|数据)/, /[Сс]рочно|[Нн]емедленно|[Сс]ейчас же|аккаунт (заблокирован|заморожен|закрыт)|[Пп]одтверд(и|ите) (сейчас|немедленно)|ограниченное время|последний шанс/],
   money: [/send money|pay now|you (won|win)|prize|lottery|investment|double your money|bank account/, /أرسل مال|ادفع|ادفع الآن|ربحت|فزت|جائزة|يانصيب|استثمار|ضاعف مالك|حساب بنكي/, /汇款|付款|立即支付|你中奖了|中奖|彩票|投资|翻倍|银行账户/, /отправь деньги|заплат(и|ите) сейчас|вы (выиграли|победили)|приз|лотерея|инвестици|удво(й|ить) деньги|банковский сч[её]т/],
   act: [/tap|click|download|forward this|share this/, /اضغط|انقر|حمّل|حمل|أعد التوجيه|أعد الإرسال|شارك هذا/, /点击|下载|转发|分享/, /нажм|клик|скача|перешл|поделись этим/]
 };
@@ -611,7 +616,15 @@ var PATTERNS = {
 function matchAny(group, text, latinLower) {
   var pats = PATTERNS[group];
   for (var i = 0; i < pats.length; i++) {
-    if (pats[i].test(text) || pats[i].test(latinLower)) return true;
+    var sources = [text, latinLower];
+    for (var s = 0; s < sources.length; s++) {
+      var src = sources[s];
+      var m = pats[i].exec(src);
+      if (!m) continue;
+      // Do not treat the domain in an email address as a link.
+      if (group === 'link' && m.index > 0 && src.charAt(m.index - 1) === '@') continue;
+      return true;
+    }
   }
   return false;
 }
@@ -635,7 +648,8 @@ function matchWords(group, text, latinLower, out) {
     var src = text, m = pats[i].exec(text);
     if (!m) { src = latinLower; m = pats[i].exec(latinLower); }
     if (!m) continue;
-    var w = wholeWord(src, m.index, m.index + m[0].length, /^(https?:\/\/|www\.)/i.test(m[0]));
+    if (group === 'link' && m.index > 0 && src.charAt(m.index - 1) === '@') continue;
+    var w = wholeWord(src, m.index, m.index + m[0].length, /^(https?:\/\/|www\.)/i.test(m[0]) || /\./.test(m[0]));
     if (w && out.indexOf(w) < 0) out.push(w);
   }
   return out;
@@ -678,8 +692,12 @@ function checkForward() {
     kind = 'danger'; title = T('vDanger'); reason = T('rCode'); action = T('aCode'); groups = ['code', 'send'];
   } else if (hasLink && urgent) {
     kind = 'danger'; title = T('vDanger'); reason = T('rLinkUrg'); action = T('aLinkUrg'); groups = ['link', 'urgent'];
+  } else if (hasCode && urgent) {
+    kind = 'danger'; title = T('vDanger'); reason = T('rCode'); action = T('aCode'); groups = ['code', 'urgent'];
   } else if (money) {
     kind = 'danger'; title = T('vDanger'); reason = T('rMoney'); action = T('aMoney'); groups = ['money'];
+  } else if (urgent) {
+    kind = 'unknown'; title = T('vUnknown'); reason = T('rUrgent'); action = T('aUrgent'); groups = ['urgent'];
   } else if (hasLink || act) {
     kind = 'unknown'; title = T('vUnknown'); reason = T('rLink'); action = T('aLink'); groups = ['link', 'act'];
   } else {
