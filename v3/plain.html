@@ -92,6 +92,15 @@
   #lockBox h2 { font-family: var(--caps); font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ivory); }
   #lockBox input { text-align: center; font-size: 1.4rem; letter-spacing: 0.4em; }
   .draftbanner { background: rgba(212, 175, 90, 0.14); color: var(--gold); border: 1px solid var(--gold-hair); border-radius: 12px; padding: 10px; text-align: center; margin: 12px 0; font-family: var(--caps); letter-spacing: 0.12em; }
+
+  .pw-wrap { position: relative; }
+  .pw-wrap input { padding-inline-end: 72px; }
+  .pw-toggle { position: absolute; inset-inline-end: 8px; top: 50%; transform: translateY(-50%); margin: 0; padding: 4px 10px; font-size: 0.85rem; }
+  .pw-meter { height: 8px; border-radius: 999px; background: rgba(212, 175, 90, 0.15); margin: 12px 0 8px; overflow: hidden; border: 1px solid rgba(212, 175, 90, 0.22); }
+  .pw-meter > i { display: block; height: 100%; width: 0%; border-radius: 999px; transition: width 0.25s ease, background 0.25s ease; background: var(--danger); }
+  .pw-meter.med > i { background: var(--gold); }
+  .pw-meter.strong > i { background: var(--safe); }
+  #pwResult { min-height: 1.2em; }
   @media (prefers-reduced-motion: reduce) { button { transition: none; } }
 </style>
 </head>
@@ -116,6 +125,19 @@
   <div id="result"></div>
   <p class="note" data-t="checkNote"></p>
 </section>
+
+<section id="pwSection">
+  <h2 data-t="pwTitle"></h2>
+  <p data-t="pwHint"></p>
+  <div class="pw-wrap">
+    <input type="password" id="pwInput" data-ph="pwPh" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text">
+    <button type="button" class="small pw-toggle" id="pwToggle" data-t="pwShow" aria-pressed="false"></button>
+  </div>
+  <div class="pw-meter" id="pwMeter" aria-hidden="true"><i id="pwBar"></i></div>
+  <div id="pwResult"></div>
+  <p class="note" data-t="pwNote"></p>
+</section>
+
 
 <section>
   <h2 data-t="localTitle"></h2>
@@ -304,7 +326,22 @@ musKeep: 'Keep', musKept: 'Kept on this phone.', musNeedNet: 'Not on this phone 
 radioBtn: '📻 Satar Radio', radioStop: 'Stop', radioNow: 'Now playing:', radioEmpty: 'Nothing to play yet.',
 radioNote: 'Satar Radio plays the free music and your own songs, one after another. With no internet it plays only what is on this phone.',
 recMailBody: 'Satar backup — I will attach the downloaded satar-backup.json file by hand.',
-recSmsBody: 'Satar backup — I will attach the downloaded file by hand.'
+recSmsBody: 'Satar backup — I will attach the downloaded file by hand.',
+pwTitle: 'Password strength', pwHint: 'Type a password to see if it is weak, medium, or strong. Checked only on this phone — nothing is saved or sent.',
+pwPh: 'Type a password…', pwShow: 'Show', pwHide: 'Hide',
+pwNote: 'This check never leaves your phone. Nothing is stored. It is a guide, not a guarantee.',
+pwEmpty: 'Type a password above.',
+pwWeak: 'WEAK', pwMed: 'MEDIUM', pwStrong: 'STRONG',
+pwRShort: 'Too short.', pwRCommon: 'Too common or easy to guess.',
+pwRLetters: 'Only letters — no numbers or symbols.',
+pwRSimple: 'Mostly one kind of character.',
+pwROk: 'Mixed types, but still short or missing a symbol.',
+pwRGood: 'Long and mixed — letters, numbers, and symbols.',
+pwTShort: 'Use at least 12 characters.',
+pwTCommon: 'Avoid names, years, and simple sequences.',
+pwTMix: 'Mix upper and lower case, a number, and a symbol.',
+pwTLonger: 'Make it longer and add a symbol you will remember.',
+pwTKeep: 'Still: never reuse it, and never send it in a chat.'
 },
 ar: {
 sub: 'تحقق من الرسالة قبل أن تثق بها. لا شيء يغادر هاتفك. 💜',
@@ -356,7 +393,22 @@ musKeep: 'احفظ', musKept: 'حُفظت على هذا الهاتف.', musNeedN
 radioBtn: '📻 راديو ستار', radioStop: 'إيقاف', radioNow: 'يُشغَّل الآن:', radioEmpty: 'لا يوجد ما يُشغَّل بعد.',
 radioNote: 'راديو ستار يشغّل الموسيقى المجانية وأغانيك واحدة بعد الأخرى. بلا إنترنت يشغّل فقط ما هو محفوظ على هذا الهاتف.',
 recMailBody: 'نسخة ستار الاحتياطية — سأرفق ملف satar-backup.json المنزّل بنفسي.',
-recSmsBody: 'نسخة ستار الاحتياطية — سأرفق الملف المنزّل بنفسي.'
+recSmsBody: 'نسخة ستار الاحتياطية — سأرفق الملف المنزّل بنفسي.',
+pwTitle: 'قوة كلمة المرور', pwHint: 'اكتب كلمة مرور لترى إن كانت ضعيفة أو متوسطة أو قوية. الفحص على هذا الهاتف فقط — لا يُحفظ شيء ولا يُرسل.',
+pwPh: 'اكتب كلمة مرور…', pwShow: 'أظهر', pwHide: 'أخفِ',
+pwNote: 'هذا الفحص لا يغادر هاتفك أبداً. لا يُخزَّن شيء. وهو دليل، وليس ضماناً.',
+pwEmpty: 'اكتب كلمة مرور أعلاه.',
+pwWeak: 'ضعيفة', pwMed: 'متوسطة', pwStrong: 'قوية',
+pwRShort: 'قصيرة جداً.', pwRCommon: 'شائعة أو سهلة التخمين.',
+pwRLetters: 'حروف فقط — بلا أرقام أو رموز.',
+pwRSimple: 'معظمها من نوع واحد من الأحرف.',
+pwROk: 'أنواع مختلطة، لكنها ما زالت قصيرة أو بلا رمز.',
+pwRGood: 'طويلة ومختلطة — حروف وأرقام ورموز.',
+pwTShort: 'استخدم ١٢ حرفاً على الأقل.',
+pwTCommon: 'تجنب الأسماء والسنوات والتسلسلات البسيطة.',
+pwTMix: 'امزج حروفاً كبيرة وصغيرة ورقماً ورمزاً.',
+pwTLonger: 'اجعلها أطول وأضف رمزاً تتذكره.',
+pwTKeep: 'مع ذلك: لا تعد استخدامها، ولا ترسلها في محادثة.'
 },
 zh: {
 sub: '转发之前先核查。任何内容都不会离开你的手机。💜',
@@ -408,7 +460,22 @@ musKeep: '保存', musKept: '已保存到这部手机。', musNeedNet: '还没�
 radioBtn: '📻 Satar 电台', radioStop: '停止', radioNow: '正在播放：', radioEmpty: '暂时没有可播放的内容。',
 radioNote: 'Satar 电台依次播放免费音乐和你自己的歌曲。没有网络时，只播放这部手机上已有的。',
 recMailBody: 'Satar 备份——我会手动附上下载的 satar-backup.json 文件。',
-recSmsBody: 'Satar 备份——我会手动附上下载的文件。'
+recSmsBody: 'Satar 备份——我会手动附上下载的文件。',
+pwTitle: '密码强度', pwHint: '输入密码，查看是弱、中还是强。只在本机检查——不保存、不发送。',
+pwPh: '输入密码…', pwShow: '显示', pwHide: '隐藏',
+pwNote: '此检查不会离开你的手机。不会存储任何内容。这是参考，不是保证。',
+pwEmpty: '请在上方输入密码。',
+pwWeak: '弱', pwMed: '中', pwStrong: '强',
+pwRShort: '太短。', pwRCommon: '太常见或容易猜到。',
+pwRLetters: '只有字母——没有数字或符号。',
+pwRSimple: '字符种类单一。',
+pwROk: '有混合，但仍偏短或缺少符号。',
+pwRGood: '够长且混合——字母、数字和符号。',
+pwTShort: '至少使用 12 个字符。',
+pwTCommon: '避免姓名、年份和简单序列。',
+pwTMix: '混合大小写、数字和符号。',
+pwTLonger: '再加长，并加一个你能记住的符号。',
+pwTKeep: '仍须注意：不要重复使用，也不要在聊天里发送。'
 },
 ru: {
 sub: 'Проверьте пересланное сообщение, прежде чем ему доверять. Ничего не покидает ваш телефон. 💜',
@@ -539,7 +606,22 @@ radioNow: 'Сейчас играет:',
 radioEmpty: 'Пока нечего играть.',
 radioNote: 'Радио Сатар играет бесплатную музыку и ваши песни одну за другой. Без интернета — только то, что есть на этом телефоне.',
 recMailBody: 'Резервная копия Сатара — я сам прикреплю скачанный файл satar-backup.json.',
-recSmsBody: 'Резервная копия Сатара — я сам прикреплю скачанный файл.'
+recSmsBody: 'Резервная копия Сатара — я сам прикреплю скачанный файл.',
+pwTitle: 'Надёжность пароля', pwHint: 'Введите пароль, чтобы увидеть: слабый, средний или сильный. Проверка только на этом телефоне — ничего не сохраняется и не отправляется.',
+pwPh: 'Введите пароль…', pwShow: 'Показать', pwHide: 'Скрыть',
+pwNote: 'Эта проверка никогда не покидает телефон. Ничего не сохраняется. Это ориентир, а не гарантия.',
+pwEmpty: 'Введите пароль выше.',
+pwWeak: 'СЛАБЫЙ', pwMed: 'СРЕДНИЙ', pwStrong: 'СИЛЬНЫЙ',
+pwRShort: 'Слишком короткий.', pwRCommon: 'Слишком простой или распространённый.',
+pwRLetters: 'Только буквы — без цифр и символов.',
+pwRSimple: 'В основном один тип символов.',
+pwROk: 'Есть смесь, но всё ещё коротко или нет символа.',
+pwRGood: 'Длинный и смешанный — буквы, цифры и символы.',
+pwTShort: 'Используйте не меньше 12 символов.',
+pwTCommon: 'Избегайте имён, годов и простых последовательностей.',
+pwTMix: 'Смешайте заглавные и строчные, цифру и символ.',
+pwTLonger: 'Сделайте длиннее и добавьте символ, который запомните.',
+pwTKeep: 'И всё же: не используйте повторно и не отправляйте в чат.'
 }
 };
 
@@ -565,6 +647,11 @@ function render() {
   ['langRu', 'langAr', 'langEn', 'langZh'].forEach(function (id) { el(id).classList.remove('on'); });
   el(LANG === 'ru' ? 'langRu' : LANG === 'ar' ? 'langAr' : LANG === 'en' ? 'langEn' : 'langZh').classList.add('on');
   el('badge').textContent = T('badgeNew');
+  if (el('pwToggle')) {
+    var pwShow = el('pwInput') && el('pwInput').type !== 'password';
+    el('pwToggle').textContent = pwShow ? T('pwHide') : T('pwShow');
+    if (el('pwResult')) renderPw();
+  }
   renderCash();
 }
 
@@ -582,12 +669,74 @@ function showVerdict(box, kind, title, reason, action) {
     '<div style="font-size:1rem;font-weight:normal;margin-top:6px;"><b>' + esc(T('whatToDo')) + '</b> ' + esc(action) + '</div>';
 }
 
+
+var PW_COMMON = { password:1, password1:1, '123456':1, '12345678':1, '123456789':1, qwerty:1, abc123:1, admin:1, letmein:1, welcome:1, monkey:1, dragon:1, master:1, login:1, passw0rd:1, '111111':1, '000000':1, iloveyou:1, football:1, baseball:1, sunshine:1, princess:1, football1:1, '123123':1, '654321':1, '121212':1, '112233':1 };
+
+function scorePassword(raw) {
+  var p = String(raw || '');
+  if (!p) return { level: '', title: '', reason: T('pwEmpty'), tip: '', width: 0 };
+  var lower = p.toLowerCase();
+  var hasL = /[a-z\u0610-\u06FF\u0400-\u04FF\u4e00-\u9fff]/.test(p);
+  var hasU = /[A-Z]/.test(p);
+  var hasD = /\d/.test(p);
+  var hasS = /[^A-Za-z0-9\u0610-\u06FF\u0400-\u04FF\u4e00-\u9fff]/.test(p);
+  var kinds = (hasL ? 1 : 0) + (hasU ? 1 : 0) + (hasD ? 1 : 0) + (hasS ? 1 : 0);
+  var common = !!PW_COMMON[lower] || /^(.)\1{3,}$/.test(p) || /^(012345|12345|123456|abcdef|qwerty)/i.test(p);
+  if (p.length < 8 || common) {
+    return { level: 'weak', title: T('pwWeak'), reason: common ? T('pwRCommon') : T('pwRShort'), tip: common ? T('pwTCommon') : T('pwTShort'), width: 28 };
+  }
+  if (kinds <= 1) {
+    return { level: 'weak', title: T('pwWeak'), reason: hasL && !hasD && !hasS ? T('pwRLetters') : T('pwRSimple'), tip: T('pwTMix'), width: 34 };
+  }
+  if (p.length >= 12 && kinds >= 3 && hasS) {
+    return { level: 'strong', title: T('pwStrong'), reason: T('pwRGood'), tip: T('pwTKeep'), width: 100 };
+  }
+  return { level: 'medium', title: T('pwMed'), reason: T('pwROk'), tip: T('pwTLonger'), width: 62 };
+}
+
+function renderPw() {
+  var box = el('pwResult');
+  var meter = el('pwMeter');
+  var bar = el('pwBar');
+  var input = el('pwInput');
+  if (!box || !input) return;
+  var r = scorePassword(input.value);
+  meter.className = 'pw-meter' + (r.level === 'medium' ? ' med' : r.level === 'strong' ? ' strong' : '');
+  bar.style.width = (r.width || 0) + '%';
+  if (!r.level) {
+    box.className = '';
+    box.textContent = r.reason;
+    return;
+  }
+  var kind = r.level === 'strong' ? 'safe' : r.level === 'medium' ? 'unknown' : 'danger';
+  box.className = 'verdict ' + kind;
+  box.innerHTML = '<div>' + esc(r.title) + '</div>' +
+    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;">' + esc(r.reason) + '</div>' +
+    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;"><b>' + esc(T('whatToDo')) + '</b> ' + esc(r.tip) + '</div>';
+}
+
+function wirePw() {
+  var input = el('pwInput');
+  var tog = el('pwToggle');
+  if (!input || !tog) return;
+  input.addEventListener('input', renderPw);
+  // Never persist: clear any accidental autocomplete residue on leave.
+  input.addEventListener('blur', function () { /* value stays for UX while on page; never written to storage */ });
+  tog.addEventListener('click', function () {
+    var show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    tog.setAttribute('aria-pressed', show ? 'true' : 'false');
+    tog.textContent = show ? T('pwHide') : T('pwShow');
+  });
+  renderPw();
+}
+
 var PATTERNS = {
   code: [/code|otp|password|passcode|\bpin\b/, /كود|رمز|كلمة السر|كلمة المرور|رمز التحقق/, /验证码|密码|口令|校验码/, /[Кк]од|[Пп]арол/],
   send: [/send|share|give|tell me|enter (your |the )?(code|otp|password|pin)/, /أرسل|ارسل|شارك|اعط|أعط|اخبر|أخبر|أدخل (الكود|الرمز|رمز التحقق)/, /发送|分享|告诉|给我|输入(验证码|密码)/, /[Оо]тправ|[Пп]оделись|[Сс]ообщи|[Пп]ришл|[Вв]веди(те)? (код|пароль)/],
   link: [/https?:\/\/|www\./, /(?![^\s]*@)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+(?:com|net|org|xyz|info|top|icu|click|link|live|site|online|shop|app|co|io|biz|cc|tk|ml|ga|cf|gq|ru|cn|me|tv|pw|work|club|vip|pro|dev|tech|store|zip|mov|ly|to|page|web|cloud|cfd)(?:\/[^\s]*)?/i, /https?:\/\/|www\.|رابط/, /https?:\/\/|www\.|链接|网址/, /https?:\/\/|www\.|[Сс]сылк/],
-  urgent: [/urgent|act now|immediately|account(?:\s+\w+){0,4}\s+(?:locked|suspended|closed|blocked)|(?:your\s+)?account\s+has\s+been\s+(?:locked|suspended|closed|blocked)|(?:locked|suspended|closed|blocked)\s+account|verify\s+(?:now|immediately)|limited time|last chance|update (?:your )?(?:details|information|data)/, /عاجل|فورا|فوراً|حسابك (مغلق|موقوف|معلق)|تم إيقاف حسابك|تم ايقاف حسابك|تحقق (الآن|فورا)|وقت محدود|فرصة أخيرة|حدث بياناتك|حدّث بياناتك|حدثي بياناتك/, /紧急|立即|马上|账户(被锁定|被冻结|已关闭|被暂停|已暂停)|立即验证|限时|最后机会|更新(您的)?(资料|信息|数据)/, /[Сс]рочно|[Нн]емедленно|[Сс]ейчас же|аккаунт (заблокирован|заморожен|закрыт)|[Пп]одтверд(и|ите) (сейчас|немедленно)|ограниченное время|последний шанс/],
-  money: [/send money|pay now|you (won|win)|prize|lottery|investment|double your money|bank account/, /أرسل مال|ادفع|ادفع الآن|ربحت|فزت|جائزة|يانصيب|استثمار|ضاعف مالك|حساب بنكي/, /汇款|付款|立即支付|你中奖了|中奖|彩票|投资|翻倍|银行账户/, /отправь деньги|заплат(и|ите) сейчас|вы (выиграли|победили)|приз|лотерея|инвестици|удво(й|ить) деньги|банковский сч[её]т/],
+  urgent: [/urgent|act now|immediately|account(?:\s+\w+){0,4}\s+(?:locked|suspended|closed|blocked)|(?:your\s+)?account\s+has\s+been\s+(?:locked|suspended|closed|blocked)|(?:locked|suspended|closed|blocked)\s+account|(?:your\s+)?card\s+(?:is\s+)?(?:locked|blocked|suspended)|verify\s+(?:now|immediately)|limited time|last chance|update (?:your )?(?:details|information|data)|parcel (?:is )?(?:held|pending|stuck)|within 24 hours/, /عاجل|فورا|فوراً|حسابك (مغلق|موقوف|معلق)|تم إيقاف حسابك|تم ايقاف حسابك|تحقق (الآن|فورا)|وقت محدود|فرصة أخيرة|حدث بياناتك|حدّث بياناتك|حدثي بياناتك|بطاقتك (موقوفة|محظورة|موقفة|مجمدة)|تم إيقاف بطاقتك|طردك معلق|شحنتك بانتظار|خلال (24|٢٤) ساعة/, /紧急|立即|马上|账户(被锁定|被冻结|已关闭|被暂停|已暂停)|立即验证|限时|最后机会|更新(您的)?(资料|信息|数据)/, /[Сс]рочно|[Нн]емедленно|[Сс]ейчас же|аккаунт (заблокирован|заморожен|закрыт)|[Пп]одтверд(и|ите) (сейчас|немедленно)|ограниченное время|последний шанс/],
+  money: [/send money|pay now|you (won|win)|prize|lottery|investment|double your money|bank account|unpaid fine|pay (the |your )?fine|customs (fee|duty|charges)|claim .{0,24}prize|won (aed|usd|\$|€)/i, /أرسل مال|ادفع|ادفع الآن|لدفع|ربحت|فزت|جائزة|يانصيب|استثمار|ضاعف مالك|حساب بنكي|غرامة|مخالفة|رسوم|سداد|سدّد|سدد|دفع (الرسوم|المخالفة|الغرامة)/, /汇款|付款|立即支付|你中奖了|中奖|彩票|投资|翻倍|银行账户/, /отправь деньги|заплат(и|ите) сейчас|вы (выиграли|победили)|приз|лотерея|инвестици|удво(й|ить) деньги|банковский сч[её]т/],
   act: [/tap|click|download|forward this|share this/, /اضغط|انقر|حمّل|حمل|أعد التوجيه|أعد الإرسال|شارك هذا/, /点击|下载|转发|分享/, /нажм|клик|скача|перешл|поделись этим/]
 };
 
@@ -1292,6 +1441,7 @@ el('musPlayer').addEventListener('error', function () {
   } catch (e) {}
 })();
 
+wirePw();
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(function (rs) {
     rs.forEach(function (r) { r.unregister(); });
