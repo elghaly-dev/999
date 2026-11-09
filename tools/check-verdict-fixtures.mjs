@@ -9,8 +9,8 @@ var PATTERNS = {
   code: [/code|otp|password|passcode|\bpin\b/, /كود|رمز|كلمة السر|كلمة المرور|رمز التحقق/, /验证码|密码|口令|校验码/, /[Кк]од|[Пп]арол/],
   send: [/send|share|give|tell me|enter (your |the )?(code|otp|password|pin)/, /أرسل|ارسل|شارك|اعط|أعط|اخبر|أخبر|أدخل (الكود|الرمز|رمز التحقق)/, /发送|分享|告诉|给我|输入(验证码|密码)/, /[Оо]тправ|[Пп]оделись|[Сс]ообщи|[Пп]ришл|[Вв]веди(те)? (код|пароль)/],
   link: [/https?:\/\/|www\./, /(?![^\s]*@)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+(?:com|net|org|xyz|info|top|icu|click|link|live|site|online|shop|app|co|io|biz|cc|tk|ml|ga|cf|gq|ru|cn|me|tv|pw|work|club|vip|pro|dev|tech|store|zip|mov|ly|to|page|web|cloud|cfd)(?:\/[^\s]*)?/i, /https?:\/\/|www\.|رابط/, /https?:\/\/|www\.|链接|网址/, /https?:\/\/|www\.|[Сс]сылк/],
-  urgent: [/urgent|act now|immediately|account(?:\s+\w+){0,4}\s+(?:locked|suspended|closed|blocked)|(?:your\s+)?account\s+has\s+been\s+(?:locked|suspended|closed|blocked)|(?:locked|suspended|closed|blocked)\s+account|verify\s+(?:now|immediately)|limited time|last chance|update (?:your )?(?:details|information|data)/, /عاجل|فورا|فوراً|حسابك (مغلق|موقوف|معلق)|تم إيقاف حسابك|تم ايقاف حسابك|تحقق (الآن|فورا)|وقت محدود|فرصة أخيرة|حدث بياناتك|حدّث بياناتك|حدثي بياناتك/, /紧急|立即|马上|账户(被锁定|被冻结|已关闭|被暂停|已暂停)|立即验证|限时|最后机会|更新(您的)?(资料|信息|数据)/, /[Сс]рочно|[Нн]емедленно|[Сс]ейчас же|аккаунт (заблокирован|заморожен|закрыт)|[Пп]одтверд(и|ите) (сейчас|немедленно)|ограниченное время|последний шанс/],
-  money: [/send money|pay now|you (won|win)|prize|lottery|investment|double your money|bank account/, /أرسل مال|ادفع|ادفع الآن|ربحت|فزت|جائزة|يانصيب|استثمار|ضاعف مالك|حساب بنكي/, /汇款|付款|立即支付|你中奖了|中奖|彩票|投资|翻倍|银行账户/, /отправь деньги|заплат(и|ите) сейчас|вы (выиграли|победили)|приз|лотерея|инвестици|удво(й|ить) деньги|банковский сч[её]т/],
+  urgent: [/urgent|act now|immediately|account(?:\s+\w+){0,4}\s+(?:locked|suspended|closed|blocked)|(?:your\s+)?account\s+has\s+been\s+(?:locked|suspended|closed|blocked)|(?:locked|suspended|closed|blocked)\s+account|(?:your\s+)?card\s+(?:is\s+)?(?:locked|blocked|suspended)|verify\s+(?:now|immediately)|limited time|last chance|update (?:your )?(?:details|information|data)|parcel (?:is )?(?:held|pending|stuck)|within 24 hours/, /عاجل|فورا|فوراً|حسابك (مغلق|موقوف|معلق)|تم إيقاف حسابك|تم ايقاف حسابك|تحقق (الآن|فورا)|وقت محدود|فرصة أخيرة|حدث بياناتك|حدّث بياناتك|حدثي بياناتك|بطاقتك (موقوفة|محظورة|موقفة|مجمدة)|تم إيقاف بطاقتك|طردك معلق|شحنتك بانتظار|خلال (24|٢٤) ساعة/, /紧急|立即|马上|账户(被锁定|被冻结|已关闭|被暂停|已暂停)|立即验证|限时|最后机会|更新(您的)?(资料|信息|数据)/, /[Сс]рочно|[Нн]емедленно|[Сс]ейчас же|аккаунт (заблокирован|заморожен|закрыт)|[Пп]одтверд(и|ите) (сейчас|немедленно)|ограниченное время|последний шанс/],
+  money: [/send money|pay now|you (won|win)|prize|lottery|investment|double your money|bank account|unpaid fine|pay (the |your )?fine|customs (fee|duty|charges)|claim .{0,24}prize|won (aed|usd|\$|€)/i, /أرسل مال|ادفع|ادفع الآن|لدفع|ربحت|فزت|جائزة|يانصيب|استثمار|ضاعف مالك|حساب بنكي|غرامة|مخالفة|رسوم|سداد|سدّد|سدد|دفع (الرسوم|المخالفة|الغرامة)/, /汇款|付款|立即支付|你中奖了|中奖|彩票|投资|翻倍|银行账户/, /отправь деньги|заплат(и|ите) сейчас|вы (выиграли|победили)|приз|лотерея|инвестици|удво(й|ить) деньги|банковский сч[её]т/],
   act: [/tap|click|download|forward this|share this/, /اضغط|انقر|حمّل|حمل|أعد التوجيه|أعد الإرسال|شارك هذا/, /点击|下载|转发|分享/, /нажм|клик|скача|перешл|поделись этим/]
 };
 
@@ -68,6 +68,24 @@ var FIXTURES = [
   ['Email me at friend@gmail.com about dinner', 'NO WARNING SIGNS FOUND'],
   // Bare domain alone → UNKNOWN (link without urgency)
   ['see you at google.com', 'UNKNOWN'],
+  // UAE-style scams → DANGEROUS
+  ['تم تسجيل مخالفة مرورية بقيمة 1000 درهم عبر نظام تم. ادفع الآن عبر rta-pay-fine.xyz لتجنب الحجز', 'DANGEROUS'],
+  ['هيئة الطرق والمواصلات: لديك غرامة غير مسددة. اضغط لدفع المخالفة: tamm-fine-uae.com', 'DANGEROUS'],
+  ['Tamm: Fine AED 850 unpaid. Pay now http://tamm-pay.icu or vehicle will be seized', 'DANGEROUS'],
+  ['Emirates Post: طردك معلق في الجمارك. ادفع الرسوم عبر emiratespost-clear.xyz خلال 24 ساعة', 'DANGEROUS'],
+  ['بريد الإمارات: شحنتك بانتظارك. أكّد العنوان وادفع رسوم التوصيل: empost-track.link', 'DANGEROUS'],
+  ['Emirates Post: Your parcel is held. Update details at emirates-post-update.top', 'DANGEROUS'],
+  ['بنك أبوظبي: بطاقتك موقوفة. أدخل رمز التحقق 883421 فوراً لإعادة التفعيل', 'DANGEROUS'],
+  ['FAB: Your card is blocked. Enter OTP 552211 now to unblock. Do not share with others.', 'DANGEROUS'],
+  ['تنبيه أمني: تم إيقاف بطاقتك. أرسل رمز OTP إلى هذا الرقم خلال ساعة', 'DANGEROUS'],
+  ['اتصالات: ربحت آيفون 16! اضغط لاستلام الجائزة etisalat-win.xyz وأدخل بياناتك', 'DANGEROUS'],
+  ['du: Congratulations! You won AED 5000 prize. Claim at du-prize-claim.com', 'DANGEROUS'],
+  ['du: فزت بجائزة 10000 درهم. ادفع رسوم التوصيل الآن لاستلام الجائزة', 'DANGEROUS'],
+  // Benign Arabic UAE-ish → SAFE
+  ['مرحبا، العشاء الساعة ٧ عند بيت خالتي في دبي؟', 'NO WARNING SIGNS FOUND'],
+  ['الموعد غداً الساعة ٣ في المول، لا تنسى', 'NO WARNING SIGNS FOUND'],
+  ['وصلت للمطار، هكلمك لما أطلع من الجوازات', 'NO WARNING SIGNS FOUND'],
+  ['شكراً على المساعدة اليوم، الله يعطيك العافية', 'NO WARNING SIGNS FOUND'],
 ];
 
 var failed = 0;
