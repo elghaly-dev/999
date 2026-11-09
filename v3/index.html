@@ -6,10 +6,8 @@
 <title>Satar</title>
 <meta name="theme-color" content="#07080d">
 <link rel="stylesheet" href="../fonts/fonts.css">
-<link rel="manifest" href="arab.webmanifest">
 <link rel="icon" type="image/png" href="../icons/icon-192.png">
 <link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
-<meta name="apple-mobile-web-app-title" content="Satar">
 <style>
   :root {
     color-scheme: dark;
@@ -1514,10 +1512,11 @@ el('musPlayer').addEventListener('error', function () {
 })();
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('../sw.js', { scope: '../' }).catch(function () {});
+  navigator.serviceWorker.getRegistrations().then(function (rs) {
+    rs.forEach(function (r) { r.unregister(); });
   });
 }
+window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); });
 </script>
 </body>
 </html>
