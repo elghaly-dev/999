@@ -328,6 +328,7 @@ rMoney: 'It promises money or a prize, or asks for payment.', aMoney: 'Do not pa
 rLink: 'It has a link or asks you to act, and I cannot verify it offline.', aLink: 'Do not tap yet. Check with the sender on a different channel first.',
 rSafe: 'No link, no code request, no money or prize found. This does not prove it is true — it only means the usual trap signs are missing.', aSafe: 'Still: if it later asks you to do something, check first.',
 rUrgent: 'It uses urgency or an account threat, and I cannot verify it offline.', aUrgent: 'Do not call numbers or tap anything in it. Check with the real institution on a channel you already trust.',
+rBank: 'It pretends to be a bank or your account, and pushes you to call, tap, or act now.', aBank: 'Do not call numbers or tap links in it. Contact the institution on a number or app you already trust.',
 localTitle: '2. Local Mode', localIntro: 'Run your phone on a local network with no internet, so remote hackers have no path in.',
 netLabel: 'Browser network:', inetLabel: 'Internet:', gpsLabel: 'GPS:',
 badgeNew: 'NOT TESTED YET', testBtn: 'Check network', gpsBtn: 'Show my position',
@@ -416,6 +417,7 @@ rMoney: 'يعد بمال أو جائزة، أو يطلب دفعاً.', aMoney: '
 rLink: 'فيه رابط أو يطلب منك فعلاً، ولا أستطيع التحقق منه دون إنترنت.', aLink: 'لا تضغط بعد. تحقق مع المرسل عبر قناة أخرى أولاً.',
 rSafe: 'لم يُعثر على رابط ولا طلب رمز ولا مال أو جائزة. هذا لا يثبت أنها صحيحة — يعني فقط أن علامات الفخ المعتادة غير موجودة.', aSafe: 'مع ذلك: إذا طلب منك لاحقاً فعل شيء، تحقق أولاً.',
 rUrgent: 'فيها استعجال أو تهديد للحساب، ولا أستطيع التحقق منها دون إنترنت.', aUrgent: 'لا تتصل بأرقام فيها ولا تضغط على شيء. تحقق من الجهة الحقيقية عبر قناة تثق بها مسبقاً.',
+rBank: 'تدّعي أنها بنك أو حسابك، وتدفعك للاتصال أو الضغط أو التصرف فوراً.', aBank: 'لا تتصل بأرقام فيها ولا تضغط على روابط. تواصل مع الجهة عبر رقم أو تطبيق تثق به مسبقاً.',
 localTitle: '٢. الوضع المحلي', localIntro: 'شغّل هاتفك على شبكة محلية بلا إنترنت، حتى لا يجد المخترقون البعيدون طريقاً إليه.',
 netLabel: 'شبكة المتصفح:', inetLabel: 'الإنترنت:', gpsLabel: 'نظام تحديد المواقع:',
 badgeNew: 'لم يتم الاختبار بعد', testBtn: 'افحص الشبكة', gpsBtn: 'أظهر موقعي',
@@ -504,6 +506,7 @@ rMoney: '它承诺金钱或奖品，或要求付款。', aMoney: '不要付款�
 rLink: '它有链接或要求你行动，而我离线无法核实。', aLink: '先不要点。先通过另一个渠道向发件人核实。',
 rSafe: '没有发现链接、索要验证码、金钱或奖品。这不能证明它是真的——只说明常见的陷阱迹象没有出现。', aSafe: '不过：如果它之后要求你做什么，先核查。',
 rUrgent: '它使用催促或账户威胁，而我离线无法核实。', aUrgent: '不要拨打其中的号码，也不要点任何内容。通过你已经信任的渠道向真实机构核实。',
+rBank: '它伪装成银行或你的账户，并催你马上致电、点击或采取行动。', aBank: '不要拨打其中的号码，也不要点其中的链接。通过你已经信任的电话或应用联系该机构。',
 localTitle: '2. 本地模式', localIntro: '让你的手机运行在没有互联网的本地网络上，这样远程黑客就没有入口。',
 netLabel: '浏览器网络：', inetLabel: '互联网：', gpsLabel: '定位：',
 badgeNew: '尚未测试', testBtn: '检查网络', gpsBtn: '显示我的位置',
@@ -605,6 +608,8 @@ rSafe: 'Не найдено ни ссылки, ни просьбы о коде, 
 aSafe: 'Всё равно: если позже вас попросят что-то сделать, сначала проверьте.',
 rUrgent: 'Здесь срочность или угроза аккаунту, и я не могу проверить это без интернета.',
 aUrgent: 'Не звоните по номерам из сообщения и ничего не нажимайте. Проверьте в настоящем учреждении тем способом, которому вы уже доверяете.',
+rBank: 'Это выдаёт себя за банк или ваш счёт и торопит позвонить, нажать или действовать сразу.',
+aBank: 'Не звоните по номерам из сообщения и не нажимайте ссылки. Свяжитесь с организацией по номеру или в приложении, которым вы уже доверяете.',
 localTitle: '2. Локальный режим',
 localIntro: 'Пусть ваш телефон работает в локальной сети без интернета — тогда у удалённых взломщиков не будет к нему пути.',
 netLabel: 'Сеть браузера:',
@@ -839,7 +844,9 @@ var PATTERNS = {
   link: [/https?:\/\/|www\./, /(?![^\s]*@)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+(?:com|net|org|xyz|info|top|icu|click|link|live|site|online|shop|app|co|io|biz|cc|tk|ml|ga|cf|gq|ru|cn|me|tv|pw|work|club|vip|pro|dev|tech|store|zip|mov|ly|to|page|web|cloud|cfd)(?:\/[^\s]*)?/i, /https?:\/\/|www\.|رابط/, /https?:\/\/|www\.|链接|网址/, /https?:\/\/|www\.|[Сс]сылк/],
   urgent: [/urgent|act now|immediately|account(?:\s+\w+){0,4}\s+(?:locked|suspended|closed|blocked)|(?:your\s+)?account\s+has\s+been\s+(?:locked|suspended|closed|blocked)|(?:locked|suspended|closed|blocked)\s+account|(?:your\s+)?card\s+(?:is\s+)?(?:locked|blocked|suspended)|verify\s+(?:now|immediately)|limited time|last chance|update (?:your )?(?:details|information|data)|parcel (?:is )?(?:held|pending|stuck)|within 24 hours/, /عاجل|فورا|فوراً|حسابك (مغلق|موقوف|معلق)|تم إيقاف حسابك|تم ايقاف حسابك|تحقق (الآن|فورا)|وقت محدود|فرصة أخيرة|حدث بياناتك|حدّث بياناتك|حدثي بياناتك|بطاقتك (موقوفة|محظورة|موقفة|مجمدة)|تم إيقاف بطاقتك|طردك معلق|شحنتك بانتظار|خلال (24|٢٤) ساعة/, /紧急|立即|马上|账户(被锁定|被冻结|已关闭|被暂停|已暂停)|立即验证|限时|最后机会|更新(您的)?(资料|信息|数据)/, /[Сс]рочно|[Нн]емедленно|[Сс]ейчас же|аккаунт (заблокирован|заморожен|закрыт)|[Пп]одтверд(и|ите) (сейчас|немедленно)|ограниченное время|последний шанс/],
   money: [/send money|pay now|you (won|win)|prize|lottery|investment|double your money|bank account|unpaid fine|pay (the |your )?fine|customs (fee|duty|charges)|claim .{0,24}prize|won (aed|usd|\$|€)/i, /أرسل مال|ادفع|ادفع الآن|لدفع|ربحت|فزت|جائزة|يانصيب|استثمار|ضاعف مالك|حساب بنكي|غرامة|مخالفة|رسوم|سداد|سدّد|سدد|دفع (الرسوم|المخالفة|الغرامة)/, /汇款|付款|立即支付|你中奖了|中奖|彩票|投资|翻倍|银行账户/, /отправь деньги|заплат(и|ите) сейчас|вы (выиграли|победили)|приз|лотерея|инвестици|удво(й|ить) деньги|банковский сч[её]т/],
-  act: [/tap|click|download|forward this|share this/, /اضغط|انقر|حمّل|حمل|أعد التوجيه|أعد الإرسال|شارك هذا/, /点击|下载|转发|分享/, /нажм|клик|скача|перешл|поделись этим/]
+  act: [/tap|click|download|forward this|share this/, /اضغط|انقر|حمّل|حمل|أعد التوجيه|أعد الإرسال|شارك هذا/, /点击|下载|转发|分享/, /нажм|клик|скача|перешл|поделись этим/],
+  bank: [/\bbank\b/, /بنك|مصرف/, /银行/, /банк/],
+  call: [/\bcall us\b|\bcall now\b|\bcall this (number|phone|line)\b|\bcontact us\b|\bphone us\b|\bdial\b|\bring us\b|\bplease call\b/, /اتصل بنا|اتصل الآن|اتصل فورا|اتصل فوراً|اتصل على|تواصل معنا|كلمنا/, /请致电|致电|给我们打电话|联系我们/, /позвоните нам|звоните нам|позвоните по|свяжитесь с нами/]
 };
 
 function matchAny(group, text, latinLower) {
@@ -916,6 +923,8 @@ function checkForward() {
   var urgent = matchAny('urgent', text, latinLower);
   var money = matchAny('money', text, latinLower);
   var act = matchAny('act', text, latinLower);
+  var isBank = matchAny('bank', text, latinLower);
+  var asksCall = matchAny('call', text, latinLower);
   var kind, title, reason, action, groups = [];
   if (hasCode && asksSend) {
     kind = 'danger'; title = T('vDanger'); reason = T('rCode'); action = T('aCode'); groups = ['code', 'send'];
@@ -925,6 +934,8 @@ function checkForward() {
     kind = 'danger'; title = T('vDanger'); reason = T('rCode'); action = T('aCode'); groups = ['code', 'urgent'];
   } else if (money) {
     kind = 'danger'; title = T('vDanger'); reason = T('rMoney'); action = T('aMoney'); groups = ['money'];
+  } else if ((isBank && (urgent || asksCall || hasLink || act)) || (urgent && asksCall)) {
+    kind = 'danger'; title = T('vDanger'); reason = T('rBank'); action = T('aBank'); groups = ['bank', 'call', 'urgent', 'link', 'act'];
   } else if (urgent) {
     kind = 'unknown'; title = T('vUnknown'); reason = T('rUrgent'); action = T('aUrgent'); groups = ['urgent'];
   } else if (hasLink || act) {
