@@ -1,8 +1,6 @@
 ## What was wrong (verified on main b5c6b15)
 
-The bank-message check still cleared risky bank messages as safe. Running the
-47-case verdict suite against current main: **111/141 passed, 30 failed**
-(10 per edition, identical in all 3). Three gaps:
+Verified on main b5c6b15: risky bank messages cleared as safe in all 3 editions. Three gaps:
 
 1. **"Confirm / verify / update your password" cleared as safe** — a
    credential-confirm prompt with no send verb, no link and no urgency words
@@ -61,8 +59,7 @@ EDITION v3/christian.html
 TOTAL 15/15 passed
 ```
 
-Regression check (wider 47-case verdict suite, same harness): **141/141 passed**
-on this branch (was 111/141 on main — all 30 failures fixed, no regressions).
+Official runnable suite: `tests/bank-warning.test.mjs` — **63/63 + NEVER-SAFE battery 18/18, exit 0** (was 15/15). See the follow-up round below. (The wider 47-case suite is not available locally, so no count from it is claimed here.)
 
 ## Follow-up round (Claude conditional PASS, head 8f7fe3dc → 2443945c)
 
