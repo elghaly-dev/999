@@ -70,4 +70,4 @@ All 4 follow-ups FIXED. Tests: **63/63 + NEVER-SAFE battery 18/18, exit 0** (was
 3. **Chinese + Russian additions tested — FIXED.** 10 new cases (5 zh + 5 ru) through the real functions from each edition. Mutation-checked: removing the zh send regex fails exactly the zh code+send case; removing the ru money regex fails exactly the ru money case.
 4. **checkForward — FIXED.** `checkForward` IS present in v3/index.html:829, v3/plain.html:809 and v3/christian.html:911; the tests load the real `checkForward` from each edition and a 6-branch risky-message battery never returns safe (18/18). The "never safe" claim is proven only for the tested branches, not for untested inputs.
 
-Note: the 141/141 regression suite is not in the local checkout, so only the bank-warning suite (63/63 + 18/18) ran this round.
+Note: the wider regression suite is not in the local checkout, so only the bank-warning suite (63/63 + 18/18) ran this round.
