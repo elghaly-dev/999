@@ -103,8 +103,8 @@ const CASES = [
   { lang: 'en', text: 'Thanks for using our service.Thanks for your time', expect: 'safe' },
   { lang: 'en', text: 'See your account.Please read the note when you can', expect: 'safe' },
   // Item 2: real URLs must still be flagged.
-  { lang: 'en', text: 'Your account will be closed today. Visit secure-bank-verify.com for details', expect: 'danger' },
-  { lang: 'en', text: 'Your account will be closed today. Go to www.secure-bank-verify.com now', expect: 'danger' },
+  { lang: 'en', text: 'Your account will be closed today. Visit secure.example.com for details', expect: 'danger' },
+  { lang: 'en', text: 'Your account will be closed today. Go to www.secure.example.com now', expect: 'danger' },
   // Item 3: Chinese patterns (each verdict depends on the zh regexes).
   { lang: 'zh', text: '请确认您的密码以保持帐户正常', expect: 'danger' },
   { lang: 'zh', text: '紧急！请点击链接立即验证您的帐户', expect: 'danger' },
@@ -117,6 +117,9 @@ const CASES = [
   { lang: 'ru', text: 'Вы выиграли приз! Отправьте деньги, чтобы получить его', expect: 'danger' },
   { lang: 'ru', text: 'Ваш банк: позвоните нам прямо сейчас', expect: 'danger' },
   { lang: 'ru', text: 'Нажмите на кнопку, чтобы продолжить', expect: 'unknown' },
+  // Claude FAIL fix: \w is ASCII-only, so the old ru urgent pattern missed
+  // Cyrillic gap words (аккаунт + 2 words + заблокирован). Must be DANGER.
+  { lang: 'ru', text: 'Ваш банк: аккаунт скоро будет заблокирован, переведите деньги для разблокировки', expect: 'danger' },
   // Known-good: must stay safe ("No warning signs found").
   { lang: 'ar', text: 'نلتقي على العشاء الليلة، هات العيال', expect: 'safe' },
   { lang: 'en', text: 'I went to the bank today to deposit a cheque', expect: 'safe' },
@@ -146,11 +149,11 @@ if (failed) { console.log('FAILED ' + failed); }
 // through the pattern helpers.
 const NEVER_SAFE = [
   { branch: 'code+send', text: 'Confirm your password now: ' + GAP_DOMAIN },
-  { branch: 'link+urgent', text: 'Your account will be closed today. Visit secure-bank-verify.com for details' },
+  { branch: 'link+urgent', text: 'Your account will be closed today. Visit secure.example.com for details' },
   { branch: 'code+urgent', text: 'Your code expires now. Your account will be closed today' },
   { branch: 'money', text: 'You won a prize! Send money to claim it' },
   { branch: 'bank+call', text: 'This is your bank. Please call us now' },
-  { branch: 'bank+link', text: 'Your bank account needs review. See secure-bank-verify.com' },
+  { branch: 'bank+link', text: 'Your bank account needs review. See secure.example.com' },
 ];
 let nsTotal = 0, nsFailed = 0;
 for (const rel of EDITIONS) {
